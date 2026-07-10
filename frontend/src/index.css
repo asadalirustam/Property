@@ -1,12 +1,15 @@
 @import "tailwindcss";
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@300;400;500;600;700;800&display=swap');
 
+/* Configure class-based dark mode for Tailwind CSS v4 */
+@variant dark (&:where(.dark, .dark *));
+
 @layer base {
   body {
     @apply bg-slate-50 text-slate-900 font-sans antialiased transition-colors duration-300;
   }
   
-  body.dark {
+  .dark body {
     @apply bg-slate-950 text-slate-50;
   }
 }
