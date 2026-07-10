@@ -78,7 +78,7 @@ const BlogList = () => {
         <div className="text-center py-20 bg-slate-50 dark:bg-slate-900 rounded-2xl">
           <Info className="mx-auto h-12 w-12 text-slate-300 mb-2" />
           <p className="text-sm font-bold text-slate-700 dark:text-slate-300">No blog articles found</p>
-          <p className="text-xs text-slate-400 mt-1">Check back later or change filters.</p>
+          <p className="text-xs text-slate-500 mt-1">Check back later or change filters.</p>
         </div>
       ) : (
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
@@ -104,7 +104,7 @@ const BlogList = () => {
                     {blog.title}
                   </h3>
                 </div>
-                <div className="flex justify-between items-center text-[10px] text-slate-400 border-t pt-3 dark:border-slate-800">
+                <div className="flex justify-between items-center text-[10px] text-slate-500 border-t pt-3 dark:border-slate-800">
                   <span className="flex items-center gap-1">
                     <Calendar className="h-3 w-3" />
                     {new Date(blog.createdAt).toLocaleDateString()}

@@ -48,21 +48,21 @@ const Contact = () => {
             <div className="flex gap-3">
               <Phone className="h-5 w-5 text-primary-500 shrink-0" />
               <div>
-                <p className="text-slate-400">Phone Support</p>
+                <p className="text-slate-500">Phone Support</p>
                 <p className="mt-1 dark:text-white">+92 300 1234567</p>
               </div>
             </div>
             <div className="flex gap-3">
               <Mail className="h-5 w-5 text-primary-500 shrink-0" />
               <div>
-                <p className="text-slate-400">Email Address</p>
+                <p className="text-slate-500">Email Address</p>
                 <p className="mt-1 dark:text-white">support@propertyfinder.com</p>
               </div>
             </div>
             <div className="flex gap-3">
               <MapPin className="h-5 w-5 text-primary-500 shrink-0" />
               <div>
-                <p className="text-slate-400">Headquarters Address</p>
+                <p className="text-slate-500">Headquarters Address</p>
                 <p className="mt-1 dark:text-white leading-relaxed">Office 402, Al-Hafeez Heights, Gulberg III, Lahore, Pakistan</p>
               </div>
             </div>
@@ -90,7 +90,7 @@ const Contact = () => {
           <form onSubmit={handleSubmit} className="space-y-4">
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <div>
-                <label className="block text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-1.5">Your Name</label>
+                <label className="block text-[10px] font-bold text-slate-500 uppercase tracking-wider mb-1.5">Your Name</label>
                 <input
                   type="text"
                   required
@@ -102,7 +102,7 @@ const Contact = () => {
               </div>
 
               <div>
-                <label className="block text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-1.5">Email Address</label>
+                <label className="block text-[10px] font-bold text-slate-500 uppercase tracking-wider mb-1.5">Email Address</label>
                 <input
                   type="email"
                   required
@@ -115,7 +115,7 @@ const Contact = () => {
             </div>
 
             <div>
-              <label className="block text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-1.5">Subject</label>
+              <label className="block text-[10px] font-bold text-slate-500 uppercase tracking-wider mb-1.5">Subject</label>
               <input
                 type="text"
                 required
@@ -127,7 +127,7 @@ const Contact = () => {
             </div>
 
             <div>
-              <label className="block text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-1.5">Message Content</label>
+              <label className="block text-[10px] font-bold text-slate-500 uppercase tracking-wider mb-1.5">Message Content</label>
               <textarea
                 required
                 placeholder="Write your details..."

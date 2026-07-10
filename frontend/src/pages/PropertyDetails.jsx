@@ -171,17 +171,17 @@ const PropertyDetails = () => {
             )}
           </div>
           <h1 className="text-2xl md:text-3xl font-extrabold dark:text-white leading-tight">{currentProperty.title}</h1>
-          <p className="flex items-center gap-1 text-xs text-slate-400 mt-1 dark:text-slate-500">
+          <p className="flex items-center gap-1 text-xs text-slate-500 mt-1 dark:text-slate-500">
             <MapPin className="h-4 w-4 shrink-0" />
             <span>{currentProperty.address}, {currentProperty.city}</span>
           </p>
         </div>
 
         <div className="text-left md:text-right">
-          <p className="text-xs text-slate-400">Asking Price</p>
+          <p className="text-xs text-slate-500">Asking Price</p>
           <p className="text-2xl font-extrabold text-slate-900 dark:text-white">
             Rs. {new Intl.NumberFormat().format(currentProperty.price)}
-            {currentProperty.purpose === 'rent' && <span className="text-xs font-medium text-slate-400">/mo</span>}
+            {currentProperty.purpose === 'rent' && <span className="text-xs font-medium text-slate-500">/mo</span>}
           </p>
         </div>
       </div>
@@ -247,7 +247,7 @@ const PropertyDetails = () => {
                   <BedDouble className="h-5 w-5" />
                 </div>
                 <div>
-                  <p className="text-slate-400">Bedrooms</p>
+                  <p className="text-slate-500">Bedrooms</p>
                   <p className="font-bold text-slate-800 dark:text-slate-200">{currentProperty.bedrooms} Bed</p>
                 </div>
               </div>
@@ -256,7 +256,7 @@ const PropertyDetails = () => {
                   <Bath className="h-5 w-5" />
                 </div>
                 <div>
-                  <p className="text-slate-400">Bathrooms</p>
+                  <p className="text-slate-500">Bathrooms</p>
                   <p className="font-bold text-slate-800 dark:text-slate-200">{currentProperty.bathrooms} Bath</p>
                 </div>
               </div>
@@ -265,7 +265,7 @@ const PropertyDetails = () => {
                   <Square className="h-5 w-5" />
                 </div>
                 <div>
-                  <p className="text-slate-400">Area size</p>
+                  <p className="text-slate-500">Area size</p>
                   <p className="font-bold text-slate-800 dark:text-slate-200">{currentProperty.areaSize}</p>
                 </div>
               </div>
@@ -274,7 +274,7 @@ const PropertyDetails = () => {
                   <Clock className="h-5 w-5" />
                 </div>
                 <div>
-                  <p className="text-slate-400">Year Built</p>
+                  <p className="text-slate-500">Year Built</p>
                   <p className="font-bold text-slate-800 dark:text-slate-200">{currentProperty.yearBuilt || 'N/A'}</p>
                 </div>
               </div>
@@ -287,7 +287,7 @@ const PropertyDetails = () => {
             <div className="grid grid-cols-2 sm:grid-cols-3 gap-4">
               {Object.entries(currentProperty.amenities || {}).map(([key, val]) => (
                 <div key={key} className="flex items-center gap-2 text-xs font-semibold">
-                  <div className={`flex h-5 w-5 items-center justify-center rounded-full ${val ? 'bg-green-100 text-green-700' : 'bg-slate-100 text-slate-400'}`}>
+                  <div className={`flex h-5 w-5 items-center justify-center rounded-full ${val ? 'bg-green-100 text-green-700' : 'bg-slate-100 text-slate-500'}`}>
                     {val ? <Check className="h-3 w-3" /> : <span className="text-[10px]">-</span>}
                   </div>
                   <span className="capitalize text-slate-700 dark:text-slate-300">
@@ -323,7 +323,7 @@ const PropertyDetails = () => {
             {/* Post review */}
             {isAuthenticated && (
               <form onSubmit={handlePostReview} className="space-y-4 border-b pb-6 mb-6 dark:border-slate-800">
-                <p className="text-xs font-bold text-slate-400 uppercase tracking-wider">Leave your feedback</p>
+                <p className="text-xs font-bold text-slate-500 uppercase tracking-wider">Leave your feedback</p>
                 {reviewError && <p className="text-xs text-red-500">{reviewError}</p>}
                 
                 <div className="flex items-center gap-2">
@@ -361,7 +361,7 @@ const PropertyDetails = () => {
             {/* Review comments */}
             <div className="space-y-4">
               {reviews.length === 0 ? (
-                <p className="text-xs text-slate-400 text-center py-4">No reviews yet for this listing. Be the first to leave a feedback!</p>
+                <p className="text-xs text-slate-500 text-center py-4">No reviews yet for this listing. Be the first to leave a feedback!</p>
               ) : (
                 reviews.map((rev) => (
                   <div key={rev._id} className="border-b pb-4 mb-4 last:border-b-0 dark:border-slate-800 space-y-2">
@@ -378,7 +378,7 @@ const PropertyDetails = () => {
                         </div>
                       </div>
                       
-                      <div className="flex items-center gap-3 text-[10px] text-slate-400">
+                      <div className="flex items-center gap-3 text-[10px] text-slate-500">
                         <button onClick={() => handleLikeReview(rev._id)} className="flex items-center gap-1 hover:text-primary-600 transition">
                           <ThumbsUp className="h-3.5 w-3.5" />
                           <span>{rev.likes?.length || 0}</span>
@@ -432,7 +432,7 @@ const PropertyDetails = () => {
         <div className="lg:col-span-1 space-y-6">
           {/* Agent info card */}
           <div className="rounded-2xl border bg-white p-6 dark:border-slate-800 dark:bg-slate-900 shadow-sm text-center space-y-4">
-            <h3 className="text-sm font-bold uppercase tracking-wider text-slate-400">Listing Advertiser</h3>
+            <h3 className="text-sm font-bold uppercase tracking-wider text-slate-500">Listing Advertiser</h3>
             <div className="flex flex-col items-center gap-2">
               <img
                 src={currentProperty.owner?.avatar || 'https://cdn-icons-png.flaticon.com/512/147/147144.png'}
@@ -441,13 +441,13 @@ const PropertyDetails = () => {
               />
               <div>
                 <h4 className="font-bold text-slate-800 dark:text-slate-100">{currentProperty.owner?.name}</h4>
-                <p className="text-[10px] text-slate-400 capitalize">{currentProperty.owner?.role}</p>
+                <p className="text-[10px] text-slate-500 capitalize">{currentProperty.owner?.role}</p>
               </div>
             </div>
 
             <div className="space-y-2 pt-2 text-xs">
               <a href={`tel:${currentProperty.owner?.phone}`} className="flex items-center justify-center gap-2 rounded-xl border border-slate-200 py-2 hover:bg-slate-50 font-semibold dark:border-slate-800 dark:hover:bg-slate-800 dark:text-slate-300">
-                <Phone className="h-4 w-4 text-slate-400" />
+                <Phone className="h-4 w-4 text-slate-500" />
                 <span>Call: {currentProperty.owner?.phone || 'N/A'}</span>
               </a>
               <button
@@ -462,7 +462,7 @@ const PropertyDetails = () => {
 
           {/* Book Site Visit Schedule */}
           <div className="rounded-2xl border bg-white p-6 dark:border-slate-800 dark:bg-slate-900 shadow-sm space-y-4">
-            <h3 className="text-sm font-bold uppercase tracking-wider text-slate-400">Book Visit</h3>
+            <h3 className="text-sm font-bold uppercase tracking-wider text-slate-500">Book Visit</h3>
             
             {bookingStatus === 'success' ? (
               <div className="bg-green-50 p-4 rounded-xl text-center space-y-2 dark:bg-green-950/20">
@@ -473,7 +473,7 @@ const PropertyDetails = () => {
             ) : (
               <form onSubmit={handleBooking} className="space-y-3">
                 <div>
-                  <label className="block text-[10px] font-bold text-slate-400 uppercase mb-1">Select Date</label>
+                  <label className="block text-[10px] font-bold text-slate-500 uppercase mb-1">Select Date</label>
                   <input
                     type="date"
                     required
@@ -484,7 +484,7 @@ const PropertyDetails = () => {
                 </div>
 
                 <div>
-                  <label className="block text-[10px] font-bold text-slate-400 uppercase mb-1">Select Time slot</label>
+                  <label className="block text-[10px] font-bold text-slate-500 uppercase mb-1">Select Time slot</label>
                   <select
                     required
                     value={visitTime}
@@ -499,7 +499,7 @@ const PropertyDetails = () => {
                 </div>
 
                 <div>
-                  <label className="block text-[10px] font-bold text-slate-400 uppercase mb-1">Message for Agent</label>
+                  <label className="block text-[10px] font-bold text-slate-500 uppercase mb-1">Message for Agent</label>
                   <textarea
                     placeholder="e.g. I want to visit on Sunday..."
                     value={bookingMsg}

@@ -68,7 +68,7 @@ const Profile = () => {
             
             <div>
               <h2 className="font-bold text-slate-800 dark:text-slate-100">{user?.name}</h2>
-              <p className="text-[10px] text-slate-400 capitalize font-semibold">{user?.role} Account</p>
+              <p className="text-[10px] text-slate-500 capitalize font-semibold">{user?.role} Account</p>
             </div>
 
             <div className="border-t pt-4 text-left space-y-2 text-xs">
@@ -96,9 +96,9 @@ const Profile = () => {
             <form onSubmit={handleUpdateProfile} className="space-y-4">
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div>
-                  <label className="block text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-1.5">Full Name</label>
+                  <label className="block text-[10px] font-bold text-slate-500 uppercase tracking-wider mb-1.5">Full Name</label>
                   <div className="relative">
-                    <User className="absolute left-3 top-2.5 h-4.5 w-4.5 text-slate-400" />
+                    <User className="absolute left-3 top-2.5 h-4.5 w-4.5 text-slate-500" />
                     <input
                       type="text"
                       required
@@ -110,9 +110,9 @@ const Profile = () => {
                 </div>
 
                 <div>
-                  <label className="block text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-1.5">Phone Number</label>
+                  <label className="block text-[10px] font-bold text-slate-500 uppercase tracking-wider mb-1.5">Phone Number</label>
                   <div className="relative">
-                    <Phone className="absolute left-3 top-2.5 h-4.5 w-4.5 text-slate-400" />
+                    <Phone className="absolute left-3 top-2.5 h-4.5 w-4.5 text-slate-500" />
                     <input
                       type="text"
                       required
@@ -125,7 +125,7 @@ const Profile = () => {
               </div>
 
               <div>
-                <label className="block text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-1.5">Update Avatar Image</label>
+                <label className="block text-[10px] font-bold text-slate-500 uppercase tracking-wider mb-1.5">Update Avatar Image</label>
                 <input
                   type="file"
                   accept="image/*"
@@ -135,13 +135,13 @@ const Profile = () => {
               </div>
 
               <div className="border-t pt-4 dark:border-slate-800">
-                <h3 className="text-xs font-bold text-slate-400 uppercase tracking-wider mb-4">Change Password (leave empty to keep current)</h3>
+                <h3 className="text-xs font-bold text-slate-500 uppercase tracking-wider mb-4">Change Password (leave empty to keep current)</h3>
                 
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <div>
-                    <label className="block text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-1.5">New Password</label>
+                    <label className="block text-[10px] font-bold text-slate-500 uppercase tracking-wider mb-1.5">New Password</label>
                     <div className="relative">
-                      <Lock className="absolute left-3 top-2.5 h-4.5 w-4.5 text-slate-400" />
+                      <Lock className="absolute left-3 top-2.5 h-4.5 w-4.5 text-slate-500" />
                       <input
                         type="password"
                         placeholder="••••••••"
@@ -153,9 +153,9 @@ const Profile = () => {
                   </div>
 
                   <div>
-                    <label className="block text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-1.5">Confirm New Password</label>
+                    <label className="block text-[10px] font-bold text-slate-500 uppercase tracking-wider mb-1.5">Confirm New Password</label>
                     <div className="relative">
-                      <Lock className="absolute left-3 top-2.5 h-4.5 w-4.5 text-slate-400" />
+                      <Lock className="absolute left-3 top-2.5 h-4.5 w-4.5 text-slate-500" />
                       <input
                         type="password"
                         placeholder="••••••••"

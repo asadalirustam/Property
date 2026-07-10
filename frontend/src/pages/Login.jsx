@@ -56,9 +56,9 @@ const Login = () => {
         {/* Form */}
         <form onSubmit={handleSubmit} className="space-y-4">
           <div>
-            <label className="block text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-1.5">Email Address</label>
+            <label className="block text-[10px] font-bold text-slate-500 uppercase tracking-wider mb-1.5">Email Address</label>
             <div className="relative">
-              <Mail className="absolute left-3 top-2.5 h-4.5 w-4.5 text-slate-400" />
+              <Mail className="absolute left-3 top-2.5 h-4.5 w-4.5 text-slate-500" />
               <input
                 type="email"
                 required
@@ -72,13 +72,13 @@ const Login = () => {
 
           <div>
             <div className="flex justify-between mb-1.5">
-              <label className="block text-[10px] font-bold text-slate-400 uppercase tracking-wider">Password</label>
+              <label className="block text-[10px] font-bold text-slate-500 uppercase tracking-wider">Password</label>
               <Link to="/forgot-password" className="text-[10px] font-semibold text-primary-600 hover:underline dark:text-primary-400">
                 Forgot Password?
               </Link>
             </div>
             <div className="relative">
-              <Lock className="absolute left-3 top-2.5 h-4.5 w-4.5 text-slate-400" />
+              <Lock className="absolute left-3 top-2.5 h-4.5 w-4.5 text-slate-500" />
               <input
                 type="password"
                 required

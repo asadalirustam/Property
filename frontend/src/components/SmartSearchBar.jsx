@@ -66,9 +66,9 @@ const SmartSearchBar = () => {
       <form onSubmit={handleSearch} className="grid grid-cols-1 md:grid-cols-4 gap-3 items-end">
         {/* City Input */}
         <div>
-          <label className="block text-[10px] font-bold text-slate-400 uppercase mb-1.5 tracking-wider">Location / City</label>
+          <label className="block text-[10px] font-bold text-slate-500 uppercase mb-1.5 tracking-wider">Location / City</label>
           <div className="relative">
-            <MapPin className="absolute left-3 top-2.5 h-4.5 w-4.5 text-slate-400" />
+            <MapPin className="absolute left-3 top-2.5 h-4.5 w-4.5 text-slate-500" />
             <input
               type="text"
               placeholder="e.g. Lahore, Karachi"
@@ -81,7 +81,7 @@ const SmartSearchBar = () => {
 
         {/* Property Type Selector */}
         <div>
-          <label className="block text-[10px] font-bold text-slate-400 uppercase mb-1.5 tracking-wider">Property Type</label>
+          <label className="block text-[10px] font-bold text-slate-500 uppercase mb-1.5 tracking-wider">Property Type</label>
           <select
             value={propertyType}
             onChange={(e) => setPropertyType(e.target.value)}
@@ -96,7 +96,7 @@ const SmartSearchBar = () => {
 
         {/* Max Price */}
         <div>
-          <label className="block text-[10px] font-bold text-slate-400 uppercase mb-1.5 tracking-wider">Max Budget (Rs)</label>
+          <label className="block text-[10px] font-bold text-slate-500 uppercase mb-1.5 tracking-wider">Max Budget (Rs)</label>
           <input
             type="number"
             placeholder="e.g. 5,000,000"

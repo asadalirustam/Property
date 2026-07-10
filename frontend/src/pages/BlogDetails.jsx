@@ -68,7 +68,7 @@ const BlogDetails = () => {
             </h1>
             
             {/* Meta logs */}
-            <div className="flex flex-wrap gap-4 text-xs text-slate-400 border-y py-3 dark:border-slate-800 font-medium">
+            <div className="flex flex-wrap gap-4 text-xs text-slate-500 border-y py-3 dark:border-slate-800 font-medium">
               <span className="flex items-center gap-1">
                 <User className="h-4 w-4" />
                 {blog.author?.name}
@@ -98,11 +98,11 @@ const BlogDetails = () => {
         {/* Sidebar */}
         <div className="lg:col-span-1 space-y-6">
           <div className="rounded-2xl border bg-white p-6 dark:border-slate-800 dark:bg-slate-900 shadow-sm space-y-4">
-            <h3 className="text-sm font-bold uppercase tracking-wider text-slate-400">Recent Advisories</h3>
+            <h3 className="text-sm font-bold uppercase tracking-wider text-slate-500">Recent Advisories</h3>
             
             <div className="space-y-4">
               {recentBlogs.length === 0 ? (
-                <p className="text-xs text-slate-400">No other recent articles.</p>
+                <p className="text-xs text-slate-500">No other recent articles.</p>
               ) : (
                 recentBlogs.map((b) => (
                   <Link key={b._id} to={`/blogs/${b.slug}`} className="flex gap-3 group">
@@ -111,7 +111,7 @@ const BlogDetails = () => {
                       <h4 className="text-xs font-bold text-slate-800 group-hover:underline dark:text-slate-200 line-clamp-2">
                         {b.title}
                       </h4>
-                      <span className="text-[10px] text-slate-400 block mt-1">{new Date(b.createdAt).toLocaleDateString()}</span>
+                      <span className="text-[10px] text-slate-500 block mt-1">{new Date(b.createdAt).toLocaleDateString()}</span>
                     </div>
                   </Link>
                 ))

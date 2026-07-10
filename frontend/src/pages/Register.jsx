@@ -55,9 +55,9 @@ const Register = () => {
         {/* Form */}
         <form onSubmit={handleSubmit} className="space-y-4">
           <div>
-            <label className="block text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-1.5">Full Name</label>
+            <label className="block text-[10px] font-bold text-slate-500 uppercase tracking-wider mb-1.5">Full Name</label>
             <div className="relative">
-              <User className="absolute left-3 top-2.5 h-4.5 w-4.5 text-slate-400" />
+              <User className="absolute left-3 top-2.5 h-4.5 w-4.5 text-slate-500" />
               <input
                 type="text"
                 required
@@ -70,9 +70,9 @@ const Register = () => {
           </div>
 
           <div>
-            <label className="block text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-1.5">Email Address</label>
+            <label className="block text-[10px] font-bold text-slate-500 uppercase tracking-wider mb-1.5">Email Address</label>
             <div className="relative">
-              <Mail className="absolute left-3 top-2.5 h-4.5 w-4.5 text-slate-400" />
+              <Mail className="absolute left-3 top-2.5 h-4.5 w-4.5 text-slate-500" />
               <input
                 type="email"
                 required
@@ -85,9 +85,9 @@ const Register = () => {
           </div>
 
           <div>
-            <label className="block text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-1.5">Phone Number</label>
+            <label className="block text-[10px] font-bold text-slate-500 uppercase tracking-wider mb-1.5">Phone Number</label>
             <div className="relative">
-              <Phone className="absolute left-3 top-2.5 h-4.5 w-4.5 text-slate-400" />
+              <Phone className="absolute left-3 top-2.5 h-4.5 w-4.5 text-slate-500" />
               <input
                 type="tel"
                 required
@@ -100,9 +100,9 @@ const Register = () => {
           </div>
 
           <div>
-            <label className="block text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-1.5">Password (min. 6 chars)</label>
+            <label className="block text-[10px] font-bold text-slate-500 uppercase tracking-wider mb-1.5">Password (min. 6 chars)</label>
             <div className="relative">
-              <Lock className="absolute left-3 top-2.5 h-4.5 w-4.5 text-slate-400" />
+              <Lock className="absolute left-3 top-2.5 h-4.5 w-4.5 text-slate-500" />
               <input
                 type="password"
                 required
@@ -116,9 +116,9 @@ const Register = () => {
           </div>
 
           <div>
-            <label className="block text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-1.5">I want to join as</label>
+            <label className="block text-[10px] font-bold text-slate-500 uppercase tracking-wider mb-1.5">I want to join as</label>
             <div className="relative">
-              <Briefcase className="absolute left-3 top-2.5 h-4.5 w-4.5 text-slate-400" />
+              <Briefcase className="absolute left-3 top-2.5 h-4.5 w-4.5 text-slate-500" />
               <select
                 value={role}
                 onChange={(e) => setRole(e.target.value)}

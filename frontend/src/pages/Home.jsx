@@ -99,7 +99,7 @@ const Home = () => {
                   <Icon className="h-6 w-6" />
                 </div>
                 <span className="text-sm font-bold text-slate-800 dark:text-slate-200">{cat.name}</span>
-                <span className="text-[10px] text-slate-400 mt-1">{cat.count}</span>
+                <span className="text-[10px] text-slate-500 mt-1">{cat.count}</span>
               </Link>
             );
           })}
@@ -174,7 +174,7 @@ const Home = () => {
             </div>
             <div>
               <h3 className="font-bold text-base dark:text-white">Verified Properties</h3>
-              <p className="text-xs text-slate-500 dark:text-slate-400 mt-2 leading-relaxed">
+              <p className="text-xs text-slate-500 dark:text-slate-500 mt-2 leading-relaxed">
                 All property listings undergo rigorous administrative review. We inspect documents and tags coordinates accuracy.
               </p>
             </div>
@@ -185,7 +185,7 @@ const Home = () => {
             </div>
             <div>
               <h3 className="font-bold text-base dark:text-white">Instant Communication</h3>
-              <p className="text-xs text-slate-500 dark:text-slate-400 mt-2 leading-relaxed">
+              <p className="text-xs text-slate-500 dark:text-slate-500 mt-2 leading-relaxed">
                 Connect directly with owners/agents via our integrated real-time text chat, call, or Book Visit appointment requests.
               </p>
             </div>
@@ -196,7 +196,7 @@ const Home = () => {
             </div>
             <div>
               <h3 className="font-bold text-base dark:text-white">Market Vetted Advisors</h3>
-              <p className="text-xs text-slate-500 dark:text-slate-400 mt-2 leading-relaxed">
+              <p className="text-xs text-slate-500 dark:text-slate-500 mt-2 leading-relaxed">
                 Unlock top deals with verified agencies and top developers featured on our homepage slides.
               </p>
             </div>
@@ -221,7 +221,7 @@ const Home = () => {
                 <img src={rev.avatar} alt={rev.name} className="h-10 w-10 rounded-full object-cover" />
                 <div>
                   <h4 className="text-xs font-bold text-slate-800 dark:text-slate-100">{rev.name}</h4>
-                  <p className="text-[10px] text-slate-400">{rev.role}</p>
+                  <p className="text-[10px] text-slate-500">{rev.role}</p>
                 </div>
               </div>
             </div>
@@ -264,7 +264,7 @@ const Home = () => {
                       {blog.title}
                     </h3>
                   </div>
-                  <p className="text-[10px] text-slate-400 mt-4">
+                  <p className="text-[10px] text-slate-500 mt-4">
                     Published on {new Date(blog.createdAt).toLocaleDateString()}
                   </p>
                 </div>

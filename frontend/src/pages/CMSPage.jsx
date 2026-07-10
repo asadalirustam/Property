@@ -70,10 +70,10 @@ const CMSPage = () => {
             >
               <div className="flex justify-between items-center text-sm font-bold text-slate-800 dark:text-slate-100">
                 <span>{faq.question}</span>
-                <ChevronDown className={`h-4.5 w-4.5 text-slate-400 transition-transform ${activeFaq === i ? 'rotate-180' : ''}`} />
+                <ChevronDown className={`h-4.5 w-4.5 text-slate-500 transition-transform ${activeFaq === i ? 'rotate-180' : ''}`} />
               </div>
               {activeFaq === i && (
-                <p className="text-xs text-slate-500 mt-3 border-t pt-3 leading-relaxed dark:text-slate-400">
+                <p className="text-xs text-slate-500 mt-3 border-t pt-3 leading-relaxed dark:text-slate-500">
                   {faq.answer}
                 </p>
               )}
@@ -88,7 +88,7 @@ const CMSPage = () => {
     <div className="mx-auto max-w-3xl px-4 py-12 sm:px-6 lg:px-8 space-y-6">
       <div className="space-y-2 border-b pb-4 dark:border-slate-800">
         <h1 className="text-3xl font-extrabold tracking-tight dark:text-white font-sans">{title}</h1>
-        <p className="text-xs text-slate-400">Official page documents for PropertyFinder</p>
+        <p className="text-xs text-slate-500">Official page documents for PropertyFinder</p>
       </div>
 
       <div className="rounded-3xl border bg-white p-8 shadow-md dark:border-slate-800 dark:bg-slate-900 leading-relaxed text-slate-600 dark:text-slate-300 text-sm whitespace-pre-line">

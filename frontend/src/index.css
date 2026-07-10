@@ -1,5 +1,6 @@
 @import "tailwindcss";
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@300;400;500;600;700;800&display=swap');
+@config "../tailwind.config.js";
 
 /* Configure class-based dark mode for Tailwind CSS v4 */
 @variant dark (&:where(.dark, .dark *));

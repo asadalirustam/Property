@@ -111,23 +111,23 @@ const PropertyCard = ({ property }) => {
         </Link>
 
         {/* Address */}
-        <div className="mt-2 flex items-center gap-1 text-[11px] text-slate-400 dark:text-slate-500">
+        <div className="mt-2 flex items-center gap-1 text-[11px] text-slate-500 dark:text-slate-500">
           <MapPin className="h-3 w-3 shrink-0" />
           <span className="truncate">{property.address}, {property.city}</span>
         </div>
 
         {/* Specs Table */}
-        <div className="mt-4 flex items-center justify-between border-t border-slate-100 pt-3 text-[11px] font-medium text-slate-500 dark:border-slate-800 dark:text-slate-400">
+        <div className="mt-4 flex items-center justify-between border-t border-slate-100 pt-3 text-[11px] font-medium text-slate-500 dark:border-slate-800 dark:text-slate-500">
           <div className="flex items-center gap-1">
-            <BedDouble className="h-3.5 w-3.5 text-slate-400" />
+            <BedDouble className="h-3.5 w-3.5 text-slate-500" />
             <span>{property.bedrooms} Bed</span>
           </div>
           <div className="flex items-center gap-1">
-            <Bath className="h-3.5 w-3.5 text-slate-400" />
+            <Bath className="h-3.5 w-3.5 text-slate-500" />
             <span>{property.bathrooms} Bath</span>
           </div>
           <div className="flex items-center gap-1">
-            <Square className="h-3.5 w-3.5 text-slate-400" />
+            <Square className="h-3.5 w-3.5 text-slate-500" />
             <span>{property.areaSize}</span>
           </div>
         </div>

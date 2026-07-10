@@ -107,7 +107,7 @@ const Navbar = () => {
             {/* Theme Toggle */}
             <button
               onClick={() => setDarkMode(!darkMode)}
-              className="rounded-lg p-2 text-slate-500 hover:bg-slate-100 hover:text-slate-700 dark:text-slate-400 dark:hover:bg-slate-800 dark:hover:text-slate-200"
+              className="rounded-lg p-2 text-slate-500 hover:bg-slate-100 hover:text-slate-700 dark:text-slate-500 dark:hover:bg-slate-800 dark:hover:text-slate-200"
               aria-label="Toggle theme"
             >
               {darkMode ? <Sun className="h-5 w-5" /> : <Moon className="h-5 w-5" />}
@@ -119,7 +119,7 @@ const Navbar = () => {
                 <div className="relative">
                   <button
                     onClick={() => setShowNotifications(!showNotifications)}
-                    className="relative rounded-lg p-2 text-slate-500 hover:bg-slate-100 hover:text-slate-700 dark:text-slate-400 dark:hover:bg-slate-800 dark:hover:text-slate-200"
+                    className="relative rounded-lg p-2 text-slate-500 hover:bg-slate-100 hover:text-slate-700 dark:text-slate-500 dark:hover:bg-slate-800 dark:hover:text-slate-200"
                   >
                     <Bell className="h-5 w-5" />
                     {notifications.length > 0 && (
@@ -142,7 +142,7 @@ const Navbar = () => {
                       </div>
                       <div className="max-h-60 overflow-y-auto space-y-2">
                         {notifications.length === 0 ? (
-                          <p className="text-center text-xs py-4 text-slate-400">No new notifications</p>
+                          <p className="text-center text-xs py-4 text-slate-500">No new notifications</p>
                         ) : (
                           notifications.map((notif) => (
                             <Link
@@ -152,7 +152,7 @@ const Navbar = () => {
                               className="block rounded-lg p-2 text-xs hover:bg-slate-50 dark:hover:bg-slate-800"
                             >
                               <p className="font-semibold text-slate-800 dark:text-slate-100">{notif.title}</p>
-                              <p className="text-slate-500 dark:text-slate-400">{notif.message}</p>
+                              <p className="text-slate-500 dark:text-slate-500">{notif.message}</p>
                             </Link>
                           ))
                         )}
@@ -178,7 +178,7 @@ const Navbar = () => {
                   {userDropdownOpen && (
                     <div className="absolute right-0 mt-2 w-48 rounded-xl border border-slate-200 bg-white py-1 shadow-xl dark:border-slate-800 dark:bg-slate-900">
                       <div className="border-b px-4 py-2 mb-1">
-                        <p className="text-xs text-slate-400">Signed in as</p>
+                        <p className="text-xs text-slate-500">Signed in as</p>
                         <p className="text-xs font-semibold text-slate-700 dark:text-slate-200 truncate">{user?.email}</p>
                       </div>
                       <Link
@@ -224,13 +224,13 @@ const Navbar = () => {
           <div className="flex items-center gap-3 md:hidden">
             <button
               onClick={() => setDarkMode(!darkMode)}
-              className="rounded-lg p-2 text-slate-500 hover:bg-slate-100 hover:text-slate-700 dark:text-slate-400 dark:hover:bg-slate-800 dark:hover:text-slate-200"
+              className="rounded-lg p-2 text-slate-500 hover:bg-slate-100 hover:text-slate-700 dark:text-slate-500 dark:hover:bg-slate-800 dark:hover:text-slate-200"
             >
               {darkMode ? <Sun className="h-5 w-5" /> : <Moon className="h-5 w-5" />}
             </button>
             <button
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              className="rounded-lg p-2 text-slate-500 hover:bg-slate-100 dark:text-slate-400 dark:hover:bg-slate-800"
+              className="rounded-lg p-2 text-slate-500 hover:bg-slate-100 dark:text-slate-500 dark:hover:bg-slate-800"
             >
               {mobileMenuOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
             </button>
@@ -283,7 +283,7 @@ const Navbar = () => {
                   />
                   <div>
                     <p className="text-sm font-semibold text-slate-800 dark:text-white truncate">{user?.name}</p>
-                    <p className="text-xs text-slate-400 truncate">{user?.email}</p>
+                    <p className="text-xs text-slate-500 truncate">{user?.email}</p>
                   </div>
                 </div>
                 <Link

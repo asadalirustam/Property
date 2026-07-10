@@ -154,21 +154,21 @@ const PropertySearch = () => {
         <div className="flex items-center gap-2 self-stretch sm:self-auto bg-slate-100 p-1 rounded-xl dark:bg-slate-800">
           <button
             onClick={() => setViewMode('grid')}
-            className={`rounded-lg p-2 transition text-slate-600 dark:text-slate-400 ${viewMode === 'grid' ? '!bg-white dark:!bg-slate-900 !text-primary-600' : ''}`}
+            className={`rounded-lg p-2 transition text-slate-600 dark:text-slate-500 ${viewMode === 'grid' ? '!bg-white dark:!bg-slate-900 !text-primary-600' : ''}`}
             title="Grid View"
           >
             <Grid className="h-4 w-4" />
           </button>
           <button
             onClick={() => setViewMode('list')}
-            className={`rounded-lg p-2 transition text-slate-600 dark:text-slate-400 ${viewMode === 'list' ? '!bg-white dark:!bg-slate-900 !text-primary-600' : ''}`}
+            className={`rounded-lg p-2 transition text-slate-600 dark:text-slate-500 ${viewMode === 'list' ? '!bg-white dark:!bg-slate-900 !text-primary-600' : ''}`}
             title="List View"
           >
             <ListIcon className="h-4 w-4" />
           </button>
           <button
             onClick={() => setViewMode('map')}
-            className={`rounded-lg p-2 transition text-slate-600 dark:text-slate-400 ${viewMode === 'map' ? '!bg-white dark:!bg-slate-900 !text-primary-600' : ''}`}
+            className={`rounded-lg p-2 transition text-slate-600 dark:text-slate-500 ${viewMode === 'map' ? '!bg-white dark:!bg-slate-900 !text-primary-600' : ''}`}
             title="Full Map View"
           >
             <MapIcon className="h-4 w-4" />
@@ -184,7 +184,7 @@ const PropertySearch = () => {
               <SlidersHorizontal className="h-4 w-4 text-primary-500" />
               <span>Filters Options</span>
             </span>
-            <button onClick={handleReset} className="text-[10px] font-semibold text-slate-400 hover:text-red-500 flex items-center gap-1 transition">
+            <button onClick={handleReset} className="text-[10px] font-semibold text-slate-500 hover:text-red-500 flex items-center gap-1 transition">
               <RotateCcw className="h-3 w-3" />
               Reset
             </button>
@@ -194,13 +194,13 @@ const PropertySearch = () => {
           <div className="grid grid-cols-2 gap-2 bg-slate-50 p-1 rounded-lg dark:bg-slate-800">
             <button
               onClick={() => { setPurpose('sale'); setSearchParams({ ...Object.fromEntries(searchParams), purpose: 'sale' }); }}
-              className={`rounded-md py-1 text-xs font-bold transition ${purpose === 'sale' ? 'bg-primary-600 text-white shadow-sm' : 'text-slate-600 dark:text-slate-400'}`}
+              className={`rounded-md py-1 text-xs font-bold transition ${purpose === 'sale' ? 'bg-primary-600 text-white shadow-sm' : 'text-slate-600 dark:text-slate-500'}`}
             >
               Buy
             </button>
             <button
               onClick={() => { setPurpose('rent'); setSearchParams({ ...Object.fromEntries(searchParams), purpose: 'rent' }); }}
-              className={`rounded-md py-1 text-xs font-bold transition ${purpose === 'rent' ? 'bg-primary-600 text-white shadow-sm' : 'text-slate-600 dark:text-slate-400'}`}
+              className={`rounded-md py-1 text-xs font-bold transition ${purpose === 'rent' ? 'bg-primary-600 text-white shadow-sm' : 'text-slate-600 dark:text-slate-500'}`}
             >
               Rent
             </button>
@@ -209,7 +209,7 @@ const PropertySearch = () => {
           <form onSubmit={handleApplyFilters} className="space-y-4">
             {/* City */}
             <div>
-              <label className="block text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-1.5">City</label>
+              <label className="block text-[10px] font-bold text-slate-500 uppercase tracking-wider mb-1.5">City</label>
               <input
                 type="text"
                 placeholder="e.g. Lahore"
@@ -221,7 +221,7 @@ const PropertySearch = () => {
 
             {/* Type */}
             <div>
-              <label className="block text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-1.5">Type</label>
+              <label className="block text-[10px] font-bold text-slate-500 uppercase tracking-wider mb-1.5">Type</label>
               <select
                 value={propertyType}
                 onChange={(e) => setPropertyType(e.target.value)}
@@ -236,7 +236,7 @@ const PropertySearch = () => {
 
             {/* Price Range */}
             <div>
-              <label className="block text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-1.5">Price Budget (Rs)</label>
+              <label className="block text-[10px] font-bold text-slate-500 uppercase tracking-wider mb-1.5">Price Budget (Rs)</label>
               <div className="grid grid-cols-2 gap-2">
                 <input
                   type="number"
@@ -257,7 +257,7 @@ const PropertySearch = () => {
 
             {/* Sorting */}
             <div>
-              <label className="block text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-1.5">Sort Listings</label>
+              <label className="block text-[10px] font-bold text-slate-500 uppercase tracking-wider mb-1.5">Sort Listings</label>
               <select
                 value={sort}
                 onChange={(e) => setSort(e.target.value)}
@@ -285,7 +285,7 @@ const PropertySearch = () => {
                 {/* Rooms */}
                 <div className="grid grid-cols-2 gap-2">
                   <div>
-                    <label className="block text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-1.5">Bedrooms</label>
+                    <label className="block text-[10px] font-bold text-slate-500 uppercase tracking-wider mb-1.5">Bedrooms</label>
                     <input
                       type="number"
                       placeholder="e.g. 3"
@@ -295,7 +295,7 @@ const PropertySearch = () => {
                     />
                   </div>
                   <div>
-                    <label className="block text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-1.5">Bathrooms</label>
+                    <label className="block text-[10px] font-bold text-slate-500 uppercase tracking-wider mb-1.5">Bathrooms</label>
                     <input
                       type="number"
                       placeholder="e.g. 2"
@@ -308,7 +308,7 @@ const PropertySearch = () => {
 
                 {/* Amenities checkboxes */}
                 <div className="space-y-2">
-                  <label className="block text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-1">Amenities</label>
+                  <label className="block text-[10px] font-bold text-slate-500 uppercase tracking-wider mb-1">Amenities</label>
                   {Object.keys(amenities).map((key) => (
                     <label key={key} className="flex items-center gap-2 text-xs text-slate-600 dark:text-slate-300">
                       <input
@@ -348,7 +348,7 @@ const PropertySearch = () => {
                 <div className="text-center py-20 bg-white border border-slate-100 rounded-2xl dark:border-slate-800 dark:bg-slate-900">
                   <Info className="mx-auto h-12 w-12 text-slate-300 mb-4" />
                   <p className="text-sm font-bold text-slate-700 dark:text-slate-300">No properties found</p>
-                  <p className="text-xs text-slate-400 mt-1">Try resetting the filters or widening your search radius.</p>
+                  <p className="text-xs text-slate-500 mt-1">Try resetting the filters or widening your search radius.</p>
                 </div>
               ) : (
                 <div className={viewMode === 'grid' ? 'grid grid-cols-1 sm:grid-cols-2 gap-6' : 'space-y-4'}>

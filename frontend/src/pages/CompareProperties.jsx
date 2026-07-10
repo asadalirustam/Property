@@ -25,7 +25,7 @@ const CompareProperties = () => {
       <div className="mx-auto max-w-md px-4 py-20 text-center">
         <AlertCircle className="mx-auto h-12 w-12 text-slate-300 mb-4" />
         <h2 className="text-xl font-bold dark:text-white">Comparison List is Empty</h2>
-        <p className="text-xs text-slate-400 mt-2">
+        <p className="text-xs text-slate-500 mt-2">
           Select and add up to 3 listings from the listings page to compare them side by side.
         </p>
         <div className="pt-6">
@@ -57,12 +57,12 @@ const CompareProperties = () => {
         <table className="w-full min-w-[700px] border-collapse bg-white rounded-2xl overflow-hidden shadow dark:bg-slate-900">
           <thead>
             <tr className="border-b dark:border-slate-800">
-              <th className="w-1/4 p-4 text-left text-xs font-bold uppercase tracking-wider text-slate-400">Spec Matrix</th>
+              <th className="w-1/4 p-4 text-left text-xs font-bold uppercase tracking-wider text-slate-500">Spec Matrix</th>
               {compareList.map((p) => (
                 <th key={p._id} className="w-1/4 p-4 text-left font-sans text-xs relative group border-l dark:border-slate-800">
                   <button
                     onClick={() => dispatch(removeFromCompare(p._id))}
-                    className="absolute right-2 top-2 rounded-full p-1 text-slate-400 hover:bg-slate-50 hover:text-slate-600 dark:hover:bg-slate-800"
+                    className="absolute right-2 top-2 rounded-full p-1 text-slate-500 hover:bg-slate-50 hover:text-slate-600 dark:hover:bg-slate-800"
                   >
                     <X className="h-4 w-4" />
                   </button>

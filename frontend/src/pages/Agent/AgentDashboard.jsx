@@ -238,7 +238,7 @@ const AgentDashboard = () => {
           <button
             onClick={() => setActiveTab('listings')}
             className={`w-full flex items-center gap-2 rounded-xl px-4 py-2.5 text-xs font-semibold transition ${
-              activeTab === 'listings' ? 'bg-primary-50 text-primary-600 dark:bg-primary-950/40 dark:text-primary-400' : 'text-slate-600 dark:text-slate-400 hover:bg-slate-50'
+              activeTab === 'listings' ? 'bg-primary-50 text-primary-600 dark:bg-primary-950/40 dark:text-primary-400' : 'text-slate-600 dark:text-slate-500 hover:bg-slate-50'
             }`}
           >
             <Building className="h-4.5 w-4.5" />
@@ -248,7 +248,7 @@ const AgentDashboard = () => {
           <button
             onClick={() => { handleResetForm(); setActiveTab('form'); }}
             className={`w-full flex items-center gap-2 rounded-xl px-4 py-2.5 text-xs font-semibold transition ${
-              activeTab === 'form' ? 'bg-primary-50 text-primary-600 dark:bg-primary-950/40 dark:text-primary-400' : 'text-slate-600 dark:text-slate-400 hover:bg-slate-50'
+              activeTab === 'form' ? 'bg-primary-50 text-primary-600 dark:bg-primary-950/40 dark:text-primary-400' : 'text-slate-600 dark:text-slate-500 hover:bg-slate-50'
             }`}
           >
             <Plus className="h-4.5 w-4.5" />
@@ -258,7 +258,7 @@ const AgentDashboard = () => {
           <button
             onClick={() => setActiveTab('bookings')}
             className={`w-full flex items-center gap-2 rounded-xl px-4 py-2.5 text-xs font-semibold transition ${
-              activeTab === 'bookings' ? 'bg-primary-50 text-primary-600 dark:bg-primary-950/40 dark:text-primary-400' : 'text-slate-600 dark:text-slate-400 hover:bg-slate-50'
+              activeTab === 'bookings' ? 'bg-primary-50 text-primary-600 dark:bg-primary-950/40 dark:text-primary-400' : 'text-slate-600 dark:text-slate-500 hover:bg-slate-50'
             }`}
           >
             <Calendar className="h-4.5 w-4.5" />
@@ -268,7 +268,7 @@ const AgentDashboard = () => {
           <button
             onClick={() => setActiveTab('messages')}
             className={`w-full flex items-center gap-2 rounded-xl px-4 py-2.5 text-xs font-semibold transition ${
-              activeTab === 'messages' ? 'bg-primary-50 text-primary-600 dark:bg-primary-950/40 dark:text-primary-400' : 'text-slate-600 dark:text-slate-400 hover:bg-slate-50'
+              activeTab === 'messages' ? 'bg-primary-50 text-primary-600 dark:bg-primary-950/40 dark:text-primary-400' : 'text-slate-600 dark:text-slate-500 hover:bg-slate-50'
             }`}
           >
             <MessageSquare className="h-4.5 w-4.5" />
@@ -287,7 +287,7 @@ const AgentDashboard = () => {
               {propertyLoading ? (
                 <div className="flex justify-center py-10"><Loader2 className="h-6 w-6 animate-spin text-primary-500" /></div>
               ) : myProperties.length === 0 ? (
-                <p className="text-xs text-slate-400 py-10 text-center">No properties listed yet.</p>
+                <p className="text-xs text-slate-500 py-10 text-center">No properties listed yet.</p>
               ) : (
                 <div className="space-y-4">
                   {myProperties.map((prop) => (
@@ -296,7 +296,7 @@ const AgentDashboard = () => {
                         <img src={prop.images?.[0]} alt="preview" className="h-16 w-24 object-cover rounded-xl shrink-0" />
                         <div>
                           <h4 className="font-bold text-xs text-slate-800 dark:text-slate-200">{prop.title}</h4>
-                          <p className="text-[10px] text-slate-400 mt-0.5">{prop.address}, {prop.city}</p>
+                          <p className="text-[10px] text-slate-500 mt-0.5">{prop.address}, {prop.city}</p>
                           <p className="text-[10px] text-primary-600 font-bold mt-2">Rs. {new Intl.NumberFormat().format(prop.price)}</p>
                         </div>
                       </div>
@@ -331,7 +331,7 @@ const AgentDashboard = () => {
               <form onSubmit={handleSubmitForm} className="space-y-4">
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <div>
-                    <label className="block text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-1.5">Property Title</label>
+                    <label className="block text-[10px] font-bold text-slate-500 uppercase tracking-wider mb-1.5">Property Title</label>
                     <input
                       type="text"
                       required
@@ -344,7 +344,7 @@ const AgentDashboard = () => {
 
                   <div className="grid grid-cols-2 gap-2">
                     <div>
-                      <label className="block text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-1.5">Purpose</label>
+                      <label className="block text-[10px] font-bold text-slate-500 uppercase tracking-wider mb-1.5">Purpose</label>
                       <select
                         value={purpose}
                         onChange={(e) => setPurpose(e.target.value)}
@@ -356,7 +356,7 @@ const AgentDashboard = () => {
                     </div>
 
                     <div>
-                      <label className="block text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-1.5">Type</label>
+                      <label className="block text-[10px] font-bold text-slate-500 uppercase tracking-wider mb-1.5">Type</label>
                       <select
                         value={propertyType}
                         onChange={(e) => setPropertyType(e.target.value)}
@@ -371,7 +371,7 @@ const AgentDashboard = () => {
                 </div>
 
                 <div>
-                  <label className="block text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-1.5">Description</label>
+                  <label className="block text-[10px] font-bold text-slate-500 uppercase tracking-wider mb-1.5">Description</label>
                   <textarea
                     required
                     placeholder="Enter detailed description..."
@@ -384,7 +384,7 @@ const AgentDashboard = () => {
 
                 <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
                   <div>
-                    <label className="block text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-1.5">Price (Rs)</label>
+                    <label className="block text-[10px] font-bold text-slate-500 uppercase tracking-wider mb-1.5">Price (Rs)</label>
                     <input
                       type="number"
                       required
@@ -396,7 +396,7 @@ const AgentDashboard = () => {
                   </div>
 
                   <div>
-                    <label className="block text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-1.5">City</label>
+                    <label className="block text-[10px] font-bold text-slate-500 uppercase tracking-wider mb-1.5">City</label>
                     <input
                       type="text"
                       required
@@ -408,7 +408,7 @@ const AgentDashboard = () => {
                   </div>
 
                   <div>
-                    <label className="block text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-1.5">Area/Society</label>
+                    <label className="block text-[10px] font-bold text-slate-500 uppercase tracking-wider mb-1.5">Area/Society</label>
                     <input
                       type="text"
                       required
@@ -422,7 +422,7 @@ const AgentDashboard = () => {
 
                 <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
                   <div className="sm:col-span-2">
-                    <label className="block text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-1.5">Complete Address</label>
+                    <label className="block text-[10px] font-bold text-slate-500 uppercase tracking-wider mb-1.5">Complete Address</label>
                     <input
                       type="text"
                       required
@@ -435,7 +435,7 @@ const AgentDashboard = () => {
 
                   <div className="grid grid-cols-2 gap-2">
                     <div>
-                      <label className="block text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-1.5">Latitude</label>
+                      <label className="block text-[10px] font-bold text-slate-500 uppercase tracking-wider mb-1.5">Latitude</label>
                       <input
                         type="text"
                         required
@@ -445,7 +445,7 @@ const AgentDashboard = () => {
                       />
                     </div>
                     <div>
-                      <label className="block text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-1.5">Longitude</label>
+                      <label className="block text-[10px] font-bold text-slate-500 uppercase tracking-wider mb-1.5">Longitude</label>
                       <input
                         type="text"
                         required
@@ -459,7 +459,7 @@ const AgentDashboard = () => {
 
                 <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
                   <div>
-                    <label className="block text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-1.5">Bedrooms</label>
+                    <label className="block text-[10px] font-bold text-slate-500 uppercase tracking-wider mb-1.5">Bedrooms</label>
                     <input
                       type="number"
                       value={bedrooms}
@@ -469,7 +469,7 @@ const AgentDashboard = () => {
                   </div>
 
                   <div>
-                    <label className="block text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-1.5">Bathrooms</label>
+                    <label className="block text-[10px] font-bold text-slate-500 uppercase tracking-wider mb-1.5">Bathrooms</label>
                     <input
                       type="number"
                       value={bathrooms}
@@ -479,7 +479,7 @@ const AgentDashboard = () => {
                   </div>
 
                   <div>
-                    <label className="block text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-1.5">Area Size</label>
+                    <label className="block text-[10px] font-bold text-slate-500 uppercase tracking-wider mb-1.5">Area Size</label>
                     <input
                       type="text"
                       required
@@ -491,7 +491,7 @@ const AgentDashboard = () => {
                   </div>
 
                   <div>
-                    <label className="block text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-1.5">Year Built</label>
+                    <label className="block text-[10px] font-bold text-slate-500 uppercase tracking-wider mb-1.5">Year Built</label>
                     <input
                       type="number"
                       value={yearBuilt}
@@ -502,7 +502,7 @@ const AgentDashboard = () => {
                 </div>
 
                 <div className="border-t pt-4 dark:border-slate-800 space-y-3">
-                  <label className="block text-[10px] font-bold text-slate-400 uppercase tracking-wider">Amenities checklist</label>
+                  <label className="block text-[10px] font-bold text-slate-500 uppercase tracking-wider">Amenities checklist</label>
                   <div className="grid grid-cols-2 sm:grid-cols-3 gap-2">
                     {Object.keys(amenities).map((key) => (
                       <label key={key} className="flex items-center gap-2 text-xs text-slate-600 dark:text-slate-300">
@@ -519,7 +519,7 @@ const AgentDashboard = () => {
                 </div>
 
                 <div>
-                  <label className="block text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-1.5">Upload Images (multiple files allowed)</label>
+                  <label className="block text-[10px] font-bold text-slate-500 uppercase tracking-wider mb-1.5">Upload Images (multiple files allowed)</label>
                   <input
                     type="file"
                     multiple
@@ -557,18 +557,18 @@ const AgentDashboard = () => {
               {bookingLoading ? (
                 <div className="flex justify-center py-10"><Loader2 className="h-6 w-6 animate-spin text-primary-500" /></div>
               ) : bookings.length === 0 ? (
-                <p className="text-xs text-slate-400 py-10 text-center">No incoming visit requests yet.</p>
+                <p className="text-xs text-slate-500 py-10 text-center">No incoming visit requests yet.</p>
               ) : (
                 <div className="space-y-4">
                   {bookings.map((booking) => (
                     <div key={booking._id} className="rounded-2xl border bg-white p-4 dark:border-slate-800 dark:bg-slate-900 shadow-sm flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
                       <div>
                         <h4 className="font-bold text-xs text-slate-800 dark:text-slate-200">{booking.property?.title}</h4>
-                        <p className="text-[10px] text-slate-400 mt-1">Requested Date: {new Date(booking.visitDate).toLocaleDateString()} at {booking.visitTime}</p>
-                        <p className="text-[10px] text-slate-500 dark:text-slate-400 mt-2 bg-slate-50 dark:bg-slate-800 p-2 rounded-lg italic">
+                        <p className="text-[10px] text-slate-500 mt-1">Requested Date: {new Date(booking.visitDate).toLocaleDateString()} at {booking.visitTime}</p>
+                        <p className="text-[10px] text-slate-500 dark:text-slate-500 mt-2 bg-slate-50 dark:bg-slate-800 p-2 rounded-lg italic">
                           "Customer comment: {booking.customerMessage || 'None'}"
                         </p>
-                        <p className="text-[10px] text-slate-400 mt-2 font-semibold">Client Name: {booking.customer?.name} - {booking.customer?.phone}</p>
+                        <p className="text-[10px] text-slate-500 mt-2 font-semibold">Client Name: {booking.customer?.name} - {booking.customer?.phone}</p>
                       </div>
 
                       <div className="flex items-center gap-3">
@@ -611,12 +611,12 @@ const AgentDashboard = () => {
               {/* Inbox lists */}
               <div className="sm:col-span-1 border-r dark:border-slate-800 flex flex-col">
                 <div className="p-3 border-b dark:border-slate-800">
-                  <h3 className="font-bold text-xs text-slate-400 uppercase tracking-wider">Inbox Threads</h3>
+                  <h3 className="font-bold text-xs text-slate-500 uppercase tracking-wider">Inbox Threads</h3>
                 </div>
                 
                 <div className="flex-1 overflow-y-auto divide-y dark:divide-slate-800">
                   {chats.length === 0 ? (
-                    <p className="text-[10px] text-slate-400 p-4 text-center">No active chats.</p>
+                    <p className="text-[10px] text-slate-500 p-4 text-center">No active chats.</p>
                   ) : (
                     chats.map((chat) => {
                       const counterpart = chat.participants.find(p => p._id !== user?.id);
@@ -631,7 +631,7 @@ const AgentDashboard = () => {
                           <img src={counterpart?.avatar} alt="avatar" className="h-8 w-8 rounded-full object-cover shrink-0" />
                           <div className="flex-1 min-w-0">
                             <h4 className="font-bold text-xs text-slate-800 dark:text-slate-100 truncate">{counterpart?.name}</h4>
-                            <p className="text-[10px] text-slate-400 truncate mt-0.5">{chat.lastMessage || 'Click to message'}</p>
+                            <p className="text-[10px] text-slate-500 truncate mt-0.5">{chat.lastMessage || 'Click to message'}</p>
                           </div>
                         </button>
                       );
@@ -660,7 +660,7 @@ const AgentDashboard = () => {
                                 isMe ? 'bg-primary-600 text-white rounded-tr-none' : 'bg-white text-slate-800 dark:bg-slate-800 dark:text-slate-100 rounded-tl-none'
                               }`}>
                                 <p>{msg.text}</p>
-                                <span className={`text-[8px] block text-right mt-1 ${isMe ? 'text-primary-200' : 'text-slate-400'}`}>
+                                <span className={`text-[8px] block text-right mt-1 ${isMe ? 'text-primary-200' : 'text-slate-500'}`}>
                                   {new Date(msg.createdAt).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
                                 </span>
                               </div>
@@ -684,7 +684,7 @@ const AgentDashboard = () => {
                     </form>
                   </>
                 ) : (
-                  <div className="flex-1 flex flex-col justify-center items-center p-6 text-center text-slate-400">
+                  <div className="flex-1 flex flex-col justify-center items-center p-6 text-center text-slate-500">
                     <MessageSquare className="h-10 w-10 mb-2" />
                     <p className="text-xs">Select an inbox thread to view message history or reply.</p>
                   </div>

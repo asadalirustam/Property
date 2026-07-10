@@ -117,7 +117,7 @@ const AdminDashboard = () => {
           <button
             onClick={() => setActiveTab('stats')}
             className={`w-full flex items-center gap-2 rounded-xl px-4 py-2.5 text-xs font-semibold transition ${
-              activeTab === 'stats' ? 'bg-primary-50 text-primary-600 dark:bg-primary-950/40 dark:text-primary-400' : 'text-slate-600 dark:text-slate-400 hover:bg-slate-50'
+              activeTab === 'stats' ? 'bg-primary-50 text-primary-600 dark:bg-primary-950/40 dark:text-primary-400' : 'text-slate-600 dark:text-slate-500 hover:bg-slate-50'
             }`}
           >
             <Sparkles className="h-4.5 w-4.5" />
@@ -127,7 +127,7 @@ const AdminDashboard = () => {
           <button
             onClick={() => setActiveTab('users')}
             className={`w-full flex items-center gap-2 rounded-xl px-4 py-2.5 text-xs font-semibold transition ${
-              activeTab === 'users' ? 'bg-primary-50 text-primary-600 dark:bg-primary-950/40 dark:text-primary-400' : 'text-slate-600 dark:text-slate-400 hover:bg-slate-50'
+              activeTab === 'users' ? 'bg-primary-50 text-primary-600 dark:bg-primary-950/40 dark:text-primary-400' : 'text-slate-600 dark:text-slate-500 hover:bg-slate-50'
             }`}
           >
             <Users className="h-4.5 w-4.5" />
@@ -137,7 +137,7 @@ const AdminDashboard = () => {
           <button
             onClick={() => setActiveTab('properties')}
             className={`w-full flex items-center gap-2 rounded-xl px-4 py-2.5 text-xs font-semibold transition ${
-              activeTab === 'properties' ? 'bg-primary-50 text-primary-600 dark:bg-primary-950/40 dark:text-primary-400' : 'text-slate-600 dark:text-slate-400 hover:bg-slate-50'
+              activeTab === 'properties' ? 'bg-primary-50 text-primary-600 dark:bg-primary-950/40 dark:text-primary-400' : 'text-slate-600 dark:text-slate-500 hover:bg-slate-50'
             }`}
           >
             <Building className="h-4.5 w-4.5" />
@@ -147,7 +147,7 @@ const AdminDashboard = () => {
           <button
             onClick={() => setActiveTab('inquiries')}
             className={`w-full flex items-center gap-2 rounded-xl px-4 py-2.5 text-xs font-semibold transition ${
-              activeTab === 'inquiries' ? 'bg-primary-50 text-primary-600 dark:bg-primary-950/40 dark:text-primary-400' : 'text-slate-600 dark:text-slate-400 hover:bg-slate-50'
+              activeTab === 'inquiries' ? 'bg-primary-50 text-primary-600 dark:bg-primary-950/40 dark:text-primary-400' : 'text-slate-600 dark:text-slate-500 hover:bg-slate-50'
             }`}
           >
             <FileText className="h-4.5 w-4.5" />
@@ -157,7 +157,7 @@ const AdminDashboard = () => {
           <button
             onClick={() => setActiveTab('settings')}
             className={`w-full flex items-center gap-2 rounded-xl px-4 py-2.5 text-xs font-semibold transition ${
-              activeTab === 'settings' ? 'bg-primary-50 text-primary-600 dark:bg-primary-950/40 dark:text-primary-400' : 'text-slate-600 dark:text-slate-400 hover:bg-slate-50'
+              activeTab === 'settings' ? 'bg-primary-50 text-primary-600 dark:bg-primary-950/40 dark:text-primary-400' : 'text-slate-600 dark:text-slate-500 hover:bg-slate-50'
             }`}
           >
             <Settings className="h-4.5 w-4.5" />
@@ -178,19 +178,19 @@ const AdminDashboard = () => {
                   {/* Stats Cards grid */}
                   <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
                     <div className="bg-white border rounded-2xl p-4 shadow-sm dark:border-slate-800 dark:bg-slate-900">
-                      <p className="text-slate-400 text-xs">Total Users</p>
+                      <p className="text-slate-500 text-xs">Total Users</p>
                       <p className="text-2xl font-bold dark:text-white mt-1">{stats.totalUsers}</p>
                     </div>
                     <div className="bg-white border rounded-2xl p-4 shadow-sm dark:border-slate-800 dark:bg-slate-900">
-                      <p className="text-slate-400 text-xs">Advertised Properties</p>
+                      <p className="text-slate-500 text-xs">Advertised Properties</p>
                       <p className="text-2xl font-bold dark:text-white mt-1">{stats.totalProperties}</p>
                     </div>
                     <div className="bg-white border rounded-2xl p-4 shadow-sm dark:border-slate-800 dark:bg-slate-900">
-                      <p className="text-slate-400 text-xs">Rent Listings</p>
+                      <p className="text-slate-500 text-xs">Rent Listings</p>
                       <p className="text-2xl font-bold dark:text-white mt-1">{stats.propertiesForRent}</p>
                     </div>
                     <div className="bg-white border rounded-2xl p-4 shadow-sm dark:border-slate-800 dark:bg-slate-900">
-                      <p className="text-slate-400 text-xs">Sale Listings</p>
+                      <p className="text-slate-500 text-xs">Sale Listings</p>
                       <p className="text-2xl font-bold dark:text-white mt-1">{stats.propertiesForSale}</p>
                     </div>
                   </div>
@@ -198,7 +198,7 @@ const AdminDashboard = () => {
                   {/* Recharts Displays */}
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <div className="rounded-2xl border bg-white p-4 shadow-sm dark:border-slate-800 dark:bg-slate-900 space-y-4">
-                      <h3 className="text-xs font-bold text-slate-400 uppercase tracking-wider">Properties by Type</h3>
+                      <h3 className="text-xs font-bold text-slate-500 uppercase tracking-wider">Properties by Type</h3>
                       <div className="h-60">
                         <ResponsiveContainer width="100%" height="100%">
                           <BarChart data={stats.propertyTypeCounts}>
@@ -212,7 +212,7 @@ const AdminDashboard = () => {
                     </div>
 
                     <div className="rounded-2xl border bg-white p-4 shadow-sm dark:border-slate-800 dark:bg-slate-900 space-y-4 flex flex-col justify-between">
-                      <h3 className="text-xs font-bold text-slate-400 uppercase tracking-wider">Approval Matrix</h3>
+                      <h3 className="text-xs font-bold text-slate-500 uppercase tracking-wider">Approval Matrix</h3>
                       <div className="h-60 flex justify-center items-center">
                         <ResponsiveContainer width="100%" height="100%">
                           <PieChart>
@@ -246,7 +246,7 @@ const AdminDashboard = () => {
               {activeTab === 'users' && (
                 <div className="rounded-2xl border bg-white shadow-sm overflow-hidden dark:border-slate-800 dark:bg-slate-900">
                   <table className="w-full text-xs text-left">
-                    <thead className="bg-slate-50 text-slate-500 uppercase font-bold border-b dark:bg-slate-800 dark:border-slate-800 dark:text-slate-400">
+                    <thead className="bg-slate-50 text-slate-500 uppercase font-bold border-b dark:bg-slate-800 dark:border-slate-800 dark:text-slate-500">
                       <tr>
                         <th className="p-3">User Name</th>
                         <th className="p-3">Email Address</th>
@@ -307,7 +307,7 @@ const AdminDashboard = () => {
                         <tr key={prop._id} className="hover:bg-slate-50/50 dark:hover:bg-slate-800/50">
                           <td className="p-3">
                             <p className="font-bold text-slate-800 dark:text-slate-100">{prop.title}</p>
-                            <p className="text-[10px] text-slate-400">{prop.city}</p>
+                            <p className="text-[10px] text-slate-500">{prop.city}</p>
                           </td>
                           <td className="p-3 capitalize font-semibold">{prop.purpose}</td>
                           <td className="p-3 font-bold">Rs. {new Intl.NumberFormat().format(prop.price)}</td>
@@ -352,18 +352,18 @@ const AdminDashboard = () => {
                   <h2 className="text-lg font-bold dark:text-white font-sans">User Queries Inbox</h2>
                   
                   {inquiries.length === 0 ? (
-                    <p className="text-xs text-slate-400 py-10 text-center">No contact inquiries found.</p>
+                    <p className="text-xs text-slate-500 py-10 text-center">No contact inquiries found.</p>
                   ) : (
                     inquiries.map((msg) => (
                       <div key={msg._id} className="rounded-2xl border bg-white p-4 dark:border-slate-800 dark:bg-slate-900 shadow-sm space-y-2">
                         <div className="flex justify-between items-center">
                           <h4 className="font-bold text-xs text-slate-800 dark:text-slate-200">{msg.subject}</h4>
-                          <span className="text-[10px] text-slate-400">{new Date(msg.createdAt).toLocaleDateString()}</span>
+                          <span className="text-[10px] text-slate-500">{new Date(msg.createdAt).toLocaleDateString()}</span>
                         </div>
-                        <p className="text-xs text-slate-600 dark:text-slate-400 leading-relaxed">
+                        <p className="text-xs text-slate-600 dark:text-slate-500 leading-relaxed">
                           {msg.message}
                         </p>
-                        <p className="text-[10px] text-slate-400 border-t pt-2 dark:border-slate-800 font-semibold">
+                        <p className="text-[10px] text-slate-500 border-t pt-2 dark:border-slate-800 font-semibold">
                           From: {msg.name} ({msg.email})
                         </p>
                       </div>
@@ -380,7 +380,7 @@ const AdminDashboard = () => {
                   <form onSubmit={handleSaveSettings} className="space-y-4">
                     <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
                       <div>
-                        <label className="block text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-1.5">Site Name</label>
+                        <label className="block text-[10px] font-bold text-slate-500 uppercase tracking-wider mb-1.5">Site Name</label>
                         <input
                           type="text"
                           required
@@ -390,7 +390,7 @@ const AdminDashboard = () => {
                         />
                       </div>
                       <div>
-                        <label className="block text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-1.5">Contact Email</label>
+                        <label className="block text-[10px] font-bold text-slate-500 uppercase tracking-wider mb-1.5">Contact Email</label>
                         <input
                           type="email"
                           required
@@ -400,7 +400,7 @@ const AdminDashboard = () => {
                         />
                       </div>
                       <div>
-                        <label className="block text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-1.5">Contact Phone</label>
+                        <label className="block text-[10px] font-bold text-slate-500 uppercase tracking-wider mb-1.5">Contact Phone</label>
                         <input
                           type="text"
                           required
@@ -412,7 +412,7 @@ const AdminDashboard = () => {
                     </div>
 
                     <div>
-                      <label className="block text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-1.5">Office Address</label>
+                      <label className="block text-[10px] font-bold text-slate-500 uppercase tracking-wider mb-1.5">Office Address</label>
                       <input
                         type="text"
                         required
@@ -423,7 +423,7 @@ const AdminDashboard = () => {
                     </div>
 
                     <div>
-                      <label className="block text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-1.5">About Us Page Text</label>
+                      <label className="block text-[10px] font-bold text-slate-500 uppercase tracking-wider mb-1.5">About Us Page Text</label>
                       <textarea
                         required
                         value={aboutUs}
@@ -435,7 +435,7 @@ const AdminDashboard = () => {
 
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                       <div>
-                        <label className="block text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-1.5">Privacy Policy Page Text</label>
+                        <label className="block text-[10px] font-bold text-slate-500 uppercase tracking-wider mb-1.5">Privacy Policy Page Text</label>
                         <textarea
                           required
                           value={privacyPolicy}
@@ -445,7 +445,7 @@ const AdminDashboard = () => {
                         ></textarea>
                       </div>
                       <div>
-                        <label className="block text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-1.5">Terms of Service Page Text</label>
+                        <label className="block text-[10px] font-bold text-slate-500 uppercase tracking-wider mb-1.5">Terms of Service Page Text</label>
                         <textarea
                           required
                           value={termsOfService}
