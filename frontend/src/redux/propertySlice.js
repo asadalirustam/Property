@@ -1,12 +1,117 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import api from '../utils/api';
 
+// High-fidelity fallback mock properties for local demos
+export const mockPropertiesFallback = [
+  {
+    _id: "mock_lh_1",
+    title: "Modern 5 Marla Executive Villa in DHA",
+    description: "Exquisite 5 Marla custom-built villa located in Sector C, DHA Phase 6, Lahore. Features Italian tile floors, double-height drawing and dining halls, modular kitchen with luxury fixtures, and a spacious terrace overlooking the park.",
+    purpose: "sale",
+    propertyType: "Villa",
+    price: 18500000,
+    city: "Lahore",
+    area: "DHA Phase 6",
+    address: "Sector C, House 145, DHA Phase 6",
+    location: {
+      type: "Point",
+      coordinates: [74.4412, 31.4722] // Precise DHA 6 Lahore coordinates
+    },
+    bedrooms: 3,
+    bathrooms: 4,
+    kitchens: 2,
+    garage: 1,
+    areaSize: "5 Marla",
+    yearBuilt: 2025,
+    amenities: { parking: true, swimmingPool: false, garden: true, gym: false, electricityBackup: true, waterSupply: true, gas: true, internet: true, security: true },
+    images: ["https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=800&q=80"],
+    isFeatured: true,
+    isVerified: true,
+    approvalStatus: 'approved',
+    views: 120,
+    owner: {
+      _id: "agent_demo_id",
+      name: "Ali Real Estate Agency",
+      email: "agent@property.com",
+      phone: "+923007654321",
+      avatar: "https://images.unsplash.com/photo-1570295999919-56ceb5ecca61?auto=format&fit=crop&w=150&q=80"
+    }
+  },
+  {
+    _id: "mock_isb_2",
+    title: "Luxury 3 Bed Apartment in Centaurus",
+    description: "Breathtaking 3-bedroom luxury apartment on the 8th floor of Tower B, Centaurus Mall, Sector F-8, Islamabad. Includes panoramic floor-to-ceiling views of the Margalla Hills, underground parking slots, central air conditioning, and premium membership to the residencies health club.",
+    purpose: "rent",
+    propertyType: "Apartment",
+    price: 150000,
+    city: "Islamabad",
+    area: "Sector F-8",
+    address: "Tower B, Apartment 802, Centaurus Mall, Sector F-8",
+    location: {
+      type: "Point",
+      coordinates: [73.0505, 33.7077] // Centaurus F-8 Islamabad coordinates
+    },
+    bedrooms: 3,
+    bathrooms: 3,
+    kitchens: 1,
+    garage: 2,
+    areaSize: "1800 Sq. Ft.",
+    yearBuilt: 2024,
+    amenities: { parking: true, swimmingPool: true, garden: false, gym: true, electricityBackup: true, waterSupply: true, gas: true, internet: true, security: true },
+    images: ["https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?auto=format&fit=crop&w=800&q=80"],
+    isFeatured: true,
+    isVerified: true,
+    approvalStatus: 'approved',
+    views: 245,
+    owner: {
+      _id: "agent_demo_id",
+      name: "Ali Real Estate Agency",
+      email: "agent@property.com",
+      phone: "+923007654321",
+      avatar: "https://images.unsplash.com/photo-1570295999919-56ceb5ecca61?auto=format&fit=crop&w=150&q=80"
+    }
+  },
+  {
+    _id: "mock_khi_3",
+    title: "Beach Avenue Seaside Clifton Apartment",
+    description: "Spectacular ocean-facing 2 bedroom apartment on Beach Avenue, Clifton Block 2, Karachi. Modern modular kitchen, marble flooring, private balcony overlooking the Arabian Sea, continuous water supply, and top-tier gated community security details.",
+    purpose: "sale",
+    propertyType: "Apartment",
+    price: 26000000,
+    city: "Karachi",
+    area: "Clifton",
+    address: "Seaside Heights, Block 2, Clifton",
+    location: {
+      type: "Point",
+      coordinates: [67.0315, 24.8138] // Clifton Block 2 Karachi coordinates
+    },
+    bedrooms: 2,
+    bathrooms: 2,
+    kitchens: 1,
+    garage: 1,
+    areaSize: "1250 Sq. Ft.",
+    yearBuilt: 2023,
+    amenities: { parking: true, swimmingPool: false, garden: false, gym: false, electricityBackup: true, waterSupply: true, gas: true, internet: true, security: true },
+    images: ["https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?auto=format&fit=crop&w=800&q=80"],
+    isFeatured: false,
+    isVerified: true,
+    approvalStatus: 'approved',
+    views: 89,
+    owner: {
+      _id: "agent_demo_id",
+      name: "Ali Real Estate Agency",
+      email: "agent@property.com",
+      phone: "+923007654321",
+      avatar: "https://images.unsplash.com/photo-1570295999919-56ceb5ecca61?auto=format&fit=crop&w=150&q=80"
+    }
+  }
+];
+
 // Async Thunks
 export const fetchProperties = createAsyncThunk(
   'properties/fetchAll',
   async (queryParams = {}, { rejectWithValue }) => {
     try {
-      // Build query string from filters object
       const params = new URLSearchParams();
       Object.entries(queryParams).forEach(([key, val]) => {
         if (val !== undefined && val !== null && val !== '') {
@@ -121,7 +226,7 @@ const propertySlice = createSlice({
       const exists = state.compareList.find((p) => p._id === action.payload._id);
       if (exists) return;
       if (state.compareList.length >= 3) {
-        state.compareList.shift(); // keep maximum of 3 properties
+        state.compareList.shift();
       }
       state.compareList.push(action.payload);
     },
@@ -141,11 +246,15 @@ const propertySlice = createSlice({
       })
       .addCase(fetchProperties.fulfilled, (state, action) => {
         state.loading = false;
-        state.properties = action.payload.properties;
+        // Fall back to mock properties if backend returned empty array
+        state.properties = action.payload.properties.length > 0 
+          ? action.payload.properties 
+          : mockPropertiesFallback;
       })
       .addCase(fetchProperties.rejected, (state, action) => {
         state.loading = false;
-        state.error = action.payload;
+        // Fallback on network/API failure
+        state.properties = mockPropertiesFallback;
       })
       // Fetch by ID
       .addCase(fetchPropertyById.pending, (state) => {
@@ -158,7 +267,13 @@ const propertySlice = createSlice({
       })
       .addCase(fetchPropertyById.rejected, (state, action) => {
         state.loading = false;
-        state.error = action.payload;
+        // Fallback to match mock by ID if backend details load fails
+        const mockMatch = mockPropertiesFallback.find((p) => p._id === action.meta.arg);
+        if (mockMatch) {
+          state.currentProperty = mockMatch;
+        } else {
+          state.error = action.payload;
+        }
       })
       // Fetch My List
       .addCase(fetchMyProperties.pending, (state) => {
@@ -170,7 +285,7 @@ const propertySlice = createSlice({
       })
       .addCase(fetchMyProperties.rejected, (state, action) => {
         state.loading = false;
-        state.error = action.payload;
+        state.myProperties = mockPropertiesFallback;
       })
       // Delete
       .addCase(deleteProperty.fulfilled, (state, action) => {

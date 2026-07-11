@@ -6,7 +6,7 @@ import PropertyCard from '../components/PropertyCard';
 import { 
   SlidersHorizontal, MapPin, Grid, List as ListIcon, Map as MapIcon, RotateCcw, Loader2, Info
 } from 'lucide-react';
-import { MapContainer, TileLayer, Marker, Popup, useMap } from 'react-leaflet';
+import { MapContainer, TileLayer, Marker, Popup, useMap, useMapEvents } from 'react-leaflet';
 import L from 'leaflet';
 import 'leaflet/dist/leaflet.css';
 
@@ -31,6 +31,16 @@ const ChangeMapView = ({ center }) => {
       map.setView(center, 13);
     }
   }, [center, map]);
+  return null;
+};
+
+// Sub-component to detect map click events and trigger parent searches
+const MapEvents = ({ onMapClick }) => {
+  useMapEvents({
+    click(e) {
+      onMapClick(e.latlng.lat, e.latlng.lng);
+    },
+  });
   return null;
 };
 
@@ -134,10 +144,21 @@ const PropertySearch = () => {
     setSearchParams({ purpose });
   };
 
-  // Map settings
+  const handleMapClick = (lat, lng) => {
+    const currentParams = Object.fromEntries(searchParams);
+    currentParams.lat = lat;
+    currentParams.lng = lng;
+    currentParams.radius = radiusParam || 5;
+    setSearchParams(currentParams);
+  };
+
+  // Map settings - center around query coords, or first coordinate found, or Lahore
+  const firstPropCoords = properties.find(p => p.location?.coordinates)?.location?.coordinates;
   const mapCenter = latParam && lngParam 
     ? [parseFloat(latParam), parseFloat(lngParam)] 
-    : [31.5204, 74.3587]; // Default Lahore center
+    : firstPropCoords && firstPropCoords.length === 2
+      ? [firstPropCoords[1], firstPropCoords[0]]
+      : [31.5204, 74.3587]; // Default Lahore center
 
   return (
     <div className="mx-auto max-w-8xl px-4 py-8 sm:px-6 lg:px-8">
@@ -361,7 +382,14 @@ const PropertySearch = () => {
           )}
 
           {/* Interactive Map Section */}
-          <div className={`${viewMode === 'map' ? 'md:col-span-3' : 'md:col-span-1'} h-[550px] sticky top-24 rounded-2xl overflow-hidden border shadow-lg dark:border-slate-800`}>
+          <div className={`${viewMode === 'map' ? 'md:col-span-3' : 'md:col-span-1'} h-[550px] sticky top-24 rounded-2xl overflow-hidden border shadow-lg dark:border-slate-800 relative`}>
+            {/* Click helper overlay */}
+            <div className="absolute top-2 left-2 z-[1000] bg-white/95 dark:bg-slate-900/95 backdrop-blur px-2.5 py-1.5 rounded-lg shadow border border-slate-100 dark:border-slate-800">
+              <span className="text-[9px] font-bold text-slate-600 dark:text-slate-300">
+                💡 Tip: Click anywhere on the map to search nearby
+              </span>
+            </div>
+
             <MapContainer center={mapCenter} zoom={12} className="h-full w-full">
               <TileLayer
                 url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
@@ -369,6 +397,7 @@ const PropertySearch = () => {
               />
               
               <ChangeMapView center={mapCenter} />
+              <MapEvents onMapClick={handleMapClick} />
 
               {/* Current GPS Position Indicator (if coordinates search) */}
               {latParam && lngParam && (

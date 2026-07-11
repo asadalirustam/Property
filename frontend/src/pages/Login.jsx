@@ -106,6 +106,45 @@ const Login = () => {
           </button>
         </form>
 
+        {/* Quick Demo Credentials */}
+        <div className="mt-6 border-t pt-4 dark:border-slate-800">
+          <p className="text-center text-[10px] font-bold text-slate-500 uppercase tracking-wider mb-3">
+            Quick Demo Login
+          </p>
+          <div className="grid grid-cols-3 gap-2">
+            <button
+              type="button"
+              onClick={() => {
+                setEmail('customer@property.com');
+                setPassword('customer123');
+              }}
+              className="rounded-lg bg-slate-100 dark:bg-slate-800 text-[10px] font-bold py-1.5 hover:bg-slate-200 transition text-slate-700 dark:text-slate-300 cursor-pointer"
+            >
+              Customer
+            </button>
+            <button
+              type="button"
+              onClick={() => {
+                setEmail('agent@property.com');
+                setPassword('agent123');
+              }}
+              className="rounded-lg bg-slate-100 dark:bg-slate-800 text-[10px] font-bold py-1.5 hover:bg-slate-200 transition text-slate-700 dark:text-slate-300 cursor-pointer"
+            >
+              Agent
+            </button>
+            <button
+              type="button"
+              onClick={() => {
+                setEmail('admin@property.com');
+                setPassword('admin123');
+              }}
+              className="rounded-lg bg-slate-100 dark:bg-slate-800 text-[10px] font-bold py-1.5 hover:bg-slate-200 transition text-slate-700 dark:text-slate-300 cursor-pointer"
+            >
+              Admin
+            </button>
+          </div>
+        </div>
+
         {/* Footer link */}
         <p className="text-center text-xs text-slate-500 mt-8">
           Don't have an account?{' '}
