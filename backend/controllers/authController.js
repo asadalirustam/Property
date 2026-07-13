@@ -33,10 +33,9 @@ exports.register = async (req, res) => {
       verificationToken,
     });
 
-    // Send email verification
+    // Send email verification (non-blocking)
     const verificationUrl = `${process.env.FRONTEND_URL || 'http://localhost:5173'}/verify-email?token=${verificationToken}`;
-    
-    await sendEmail({
+    sendEmail({
       to: user.email,
       subject: 'Verify your Real Estate Account',
       html: `
@@ -45,7 +44,7 @@ exports.register = async (req, res) => {
         <a href="${verificationUrl}" target="_blank">${verificationUrl}</a>
       `,
       text: `Please verify your email: ${verificationUrl}`,
-    });
+    }).catch((err) => console.error(`Failed to send verification email to ${user.email}:`, err.message));
 
     res.status(201).json({
       success: true,
@@ -151,9 +150,9 @@ exports.forgotPassword = async (req, res) => {
 
     await user.save();
 
+    // Send password reset email (non-blocking)
     const resetUrl = `${process.env.FRONTEND_URL || 'http://localhost:5173'}/reset-password?token=${resetToken}`;
-
-    await sendEmail({
+    sendEmail({
       to: user.email,
       subject: 'Password Reset Request',
       html: `
@@ -163,7 +162,7 @@ exports.forgotPassword = async (req, res) => {
         <p>If you did not request this, please ignore this email.</p>
       `,
       text: `Reset your password here: ${resetUrl}`,
-    });
+    }).catch((err) => console.error(`Failed to send password reset email to ${user.email}:`, err.message));
 
     res.status(200).json({ success: true, message: 'Reset link emailed successfully.' });
   } catch (error) {
