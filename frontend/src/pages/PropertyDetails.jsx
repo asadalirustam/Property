@@ -6,15 +6,32 @@ import { createBooking } from '../redux/bookingSlice';
 import { createChat } from '../redux/chatSlice';
 import { 
   Phone, Mail, Calendar, MessageSquare, Info, BedDouble, Bath, Square, Clock, MapPin, 
-  Check, ShieldAlert, Star, ThumbsUp, Send, Heart, Play
+  Check, ShieldAlert, Star, ThumbsUp, Send, Heart, Play, Loader2
 } from 'lucide-react';
 import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
+import 'leaflet/dist/leaflet.css';
+import L from 'leaflet';
+import markerIcon from 'leaflet/dist/images/marker-icon.png';
+import markerShadow from 'leaflet/dist/images/marker-shadow.png';
 import api from '../utils/api';
+
 
 const PropertyDetails = () => {
   const { id } = useParams();
   const navigate = useNavigate();
   const dispatch = useDispatch();
+
+  // Fix Leaflet marker icons in Vite
+  useEffect(() => {
+    delete L.Icon.Default.prototype._getIconUrl;
+    L.Icon.Default.mergeOptions({
+      iconUrl: markerIcon,
+      shadowUrl: markerShadow,
+      iconSize: [25, 41],
+      iconAnchor: [12, 41],
+      popupAnchor: [1, -34],
+    });
+  }, []);
 
   const { currentProperty, loading, compareList } = useSelector((state) => state.properties);
   const { user, isAuthenticated } = useSelector((state) => state.auth);

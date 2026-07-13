@@ -36,6 +36,12 @@ const Login = () => {
     dispatch(loginUser({ email, password }));
   };
 
+  const handleDemoLogin = (demoEmail, demoPassword) => {
+    setEmail(demoEmail);
+    setPassword(demoPassword);
+    dispatch(loginUser({ email: demoEmail, password: demoPassword }));
+  };
+
   return (
     <div className="flex min-h-[80vh] items-center justify-center px-4 py-12">
       <div className="w-full max-w-md rounded-3xl border border-slate-100 bg-white p-8 shadow-xl dark:border-slate-800 dark:bg-slate-900 transition-all">
@@ -109,36 +115,30 @@ const Login = () => {
         {/* Quick Demo Credentials */}
         <div className="mt-6 border-t pt-4 dark:border-slate-800">
           <p className="text-center text-[10px] font-bold text-slate-500 uppercase tracking-wider mb-3">
-            Quick Demo Login
+            Quick Demo Login (One Click)
           </p>
           <div className="grid grid-cols-3 gap-2">
             <button
               type="button"
-              onClick={() => {
-                setEmail('customer@property.com');
-                setPassword('customer123');
-              }}
-              className="rounded-lg bg-slate-100 dark:bg-slate-800 text-[10px] font-bold py-1.5 hover:bg-slate-200 transition text-slate-700 dark:text-slate-300 cursor-pointer"
+              onClick={() => handleDemoLogin('customer@property.com', 'customer123')}
+              disabled={loading}
+              className="rounded-lg bg-slate-100 dark:bg-slate-800 text-[10px] font-bold py-1.5 hover:bg-slate-200 transition text-slate-700 dark:text-slate-300 cursor-pointer disabled:opacity-50"
             >
               Customer
             </button>
             <button
               type="button"
-              onClick={() => {
-                setEmail('agent@property.com');
-                setPassword('agent123');
-              }}
-              className="rounded-lg bg-slate-100 dark:bg-slate-800 text-[10px] font-bold py-1.5 hover:bg-slate-200 transition text-slate-700 dark:text-slate-300 cursor-pointer"
+              onClick={() => handleDemoLogin('agent@property.com', 'agent123')}
+              disabled={loading}
+              className="rounded-lg bg-slate-100 dark:bg-slate-800 text-[10px] font-bold py-1.5 hover:bg-slate-200 transition text-slate-700 dark:text-slate-300 cursor-pointer disabled:opacity-50"
             >
               Agent
             </button>
             <button
               type="button"
-              onClick={() => {
-                setEmail('admin@property.com');
-                setPassword('admin123');
-              }}
-              className="rounded-lg bg-slate-100 dark:bg-slate-800 text-[10px] font-bold py-1.5 hover:bg-slate-200 transition text-slate-700 dark:text-slate-300 cursor-pointer"
+              onClick={() => handleDemoLogin('admin@property.com', 'admin123')}
+              disabled={loading}
+              className="rounded-lg bg-slate-100 dark:bg-slate-800 text-[10px] font-bold py-1.5 hover:bg-slate-200 transition text-slate-700 dark:text-slate-300 cursor-pointer disabled:opacity-50"
             >
               Admin
             </button>
