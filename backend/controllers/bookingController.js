@@ -39,10 +39,15 @@ exports.createBooking = async (req, res) => {
       link: `/agent/bookings`,
     });
 
+    const populatedBooking = await Booking.findById(booking._id)
+      .populate('property', 'title address price images purpose')
+      .populate('customer', 'name email phone avatar')
+      .populate('agent', 'name email phone avatar');
+
     res.status(201).json({
       success: true,
       message: 'Booking request sent successfully!',
-      booking,
+      booking: populatedBooking,
     });
   } catch (error) {
     res.status(500).json({ success: false, message: error.message });
@@ -128,10 +133,15 @@ exports.updateBookingStatus = async (req, res) => {
       link: req.user.role === 'customer' ? `/agent/bookings` : `/customer/bookings`,
     });
 
+    const populatedBooking = await Booking.findById(booking._id)
+      .populate('property', 'title address price images purpose')
+      .populate('customer', 'name email phone avatar')
+      .populate('agent', 'name email phone avatar');
+
     res.status(200).json({
       success: true,
       message: 'Booking status updated successfully!',
-      booking,
+      booking: populatedBooking,
     });
   } catch (error) {
     res.status(500).json({ success: false, message: error.message });
