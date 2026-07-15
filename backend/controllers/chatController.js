@@ -61,13 +61,14 @@ exports.sendMessage = async (req, res) => {
     const { text } = req.body;
     const { chatId } = req.params;
 
-    const chat = await Chat.findById(chatId);
+    const chat = await Chat.findById(chatId).populate('participants', 'role');
     if (!chat) {
       return res.status(404).json({ success: false, message: 'Chat thread not found' });
     }
 
     // Verify membership
-    if (!chat.participants.includes(req.user.id)) {
+    const isParticipant = chat.participants.some((p) => p._id.toString() === req.user.id);
+    if (!isParticipant) {
       return res.status(403).json({ success: false, message: 'Not authorized to post in this chat' });
     }
 
@@ -83,15 +84,21 @@ exports.sendMessage = async (req, res) => {
     await chat.save();
 
     // Notify other participant
-    const recipientId = chat.participants.find((id) => id.toString() !== req.user.id);
+    const recipient = chat.participants.find((p) => p._id.toString() !== req.user.id);
+    const recipientRole = recipient ? recipient.role : 'customer';
+    const link = recipientRole === 'agent' || recipientRole === 'admin'
+      ? `/agent/messages?chatId=${chatId}`
+      : `/customer/messages?chatId=${chatId}`;
+
     await Notification.create({
-      recipient: recipientId,
+      recipient: recipient ? recipient._id : chat.participants.find((p) => p._id.toString() !== req.user.id),
       sender: req.user.id,
       type: 'message',
       title: `New Message from ${req.user.name}`,
       message: text.substring(0, 60),
-      link: `/messages?chatId=${chatId}`,
+      link,
     });
+
 
     const populatedMsg = await Message.findById(message._id).populate('sender', 'name email avatar role');
 

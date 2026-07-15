@@ -96,7 +96,10 @@ const PropertyDetails = () => {
 
     try {
       const res = await dispatch(createChat(currentProperty.owner._id)).unwrap();
-      navigate(`/customer/messages?chatId=${res.chat._id}`);
+      const targetPath = user.role === 'agent' || user.role === 'admin'
+        ? `/agent/messages?chatId=${res.chat._id}`
+        : `/customer/messages?chatId=${res.chat._id}`;
+      navigate(targetPath);
     } catch (err) {
       alert(err || 'Failed to start chat thread.');
     }

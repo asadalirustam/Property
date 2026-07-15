@@ -227,3 +227,23 @@ exports.subscribeNewsletter = async (req, res) => {
     res.status(500).json({ success: false, message: error.message });
   }
 };
+
+// @desc    Get all properties for approval admin management
+// @route   GET /api/admin/properties
+// @access  Private (Admin)
+exports.getPropertiesForAdmin = async (req, res) => {
+  try {
+    const properties = await Property.find()
+      .populate('owner', 'name email phone')
+      .sort({ createdAt: -1 });
+
+    res.status(200).json({
+      success: true,
+      count: properties.length,
+      properties,
+    });
+  } catch (error) {
+    res.status(500).json({ success: false, message: error.message });
+  }
+};
+

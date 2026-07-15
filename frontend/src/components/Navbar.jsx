@@ -144,17 +144,29 @@ const Navbar = () => {
                         {notifications.length === 0 ? (
                           <p className="text-center text-xs py-4 text-slate-500">No new notifications</p>
                         ) : (
-                          notifications.map((notif) => (
-                            <Link
-                              key={notif._id}
-                              to={notif.link || '#'}
-                              onClick={() => setShowNotifications(false)}
-                              className="block rounded-lg p-2 text-xs hover:bg-slate-50 dark:hover:bg-slate-800"
-                            >
-                              <p className="font-semibold text-slate-800 dark:text-slate-100">{notif.title}</p>
-                              <p className="text-slate-500 dark:text-slate-500">{notif.message}</p>
-                            </Link>
-                          ))
+                          notifications.map((notif) => {
+                            const getCorrectLink = (link) => {
+                              if (!link) return '#';
+                              if (link.startsWith('/messages?')) {
+                                return user?.role === 'agent' || user?.role === 'admin'
+                                  ? link.replace('/messages?', '/agent/messages?')
+                                  : link.replace('/messages?', '/customer/messages?');
+                              }
+                              return link;
+                            };
+
+                            return (
+                              <Link
+                                key={notif._id}
+                                to={getCorrectLink(notif.link)}
+                                onClick={() => setShowNotifications(false)}
+                                className="block rounded-lg p-2 text-xs hover:bg-slate-50 dark:hover:bg-slate-800"
+                              >
+                                <p className="font-semibold text-slate-800 dark:text-slate-100">{notif.title}</p>
+                                <p className="text-slate-500 dark:text-slate-500">{notif.message}</p>
+                              </Link>
+                            );
+                          })
                         )}
                       </div>
                     </div>

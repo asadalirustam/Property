@@ -10,6 +10,7 @@ const {
   getContactInquiries,
   submitContactInquiry,
   subscribeNewsletter,
+  getPropertiesForAdmin,
 } = require('../controllers/adminController');
 const { protect, authorize } = require('../middleware/authMiddleware');
 
@@ -20,9 +21,11 @@ router.post('/newsletter', subscribeNewsletter);
 // Protected Admin paths
 router.get('/stats', protect, authorize('admin'), getDashboardStats);
 router.get('/users', protect, authorize('admin'), getUsers);
+router.get('/properties', protect, authorize('admin'), getPropertiesForAdmin);
 router.put('/users/:id/status', protect, authorize('admin'), toggleUserStatus);
 router.put('/properties/:id/approve', protect, authorize('admin'), updateListingApproval);
 router.put('/settings', protect, authorize('admin'), updateSystemSettings);
 router.get('/inquiries', protect, authorize('admin'), getContactInquiries);
+
 
 module.exports = router;

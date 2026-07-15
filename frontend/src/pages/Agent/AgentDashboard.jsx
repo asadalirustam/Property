@@ -1,22 +1,61 @@
 import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
+import { useLocation, useNavigate, useSearchParams } from 'react-router-dom';
 import { fetchMyProperties, createNewProperty, updateProperty, deleteProperty } from '../../redux/propertySlice';
 import { fetchBookings, updateBookingStatus } from '../../redux/bookingSlice';
 import { fetchChats, fetchMessages, sendChatMessage, setActiveChat } from '../../redux/chatSlice';
 import { 
-  Building, Plus, Edit, Trash2, Calendar, MessageSquare, Save, Check, X, Send, Loader2, Info
+  Building, Plus, Edit, Trash2, Calendar, MessageSquare, Save, Check, X, Send, Loader2, Info,
+  ShieldCheck, MapPin, PlusCircle, XCircle, FileText
 } from 'lucide-react';
 import api from '../../utils/api';
 
+// Pakistan cities/areas for agent area division
+const PAKISTAN_AREAS = {
+  Lahore:     ['DHA Phase 1','DHA Phase 2','DHA Phase 3','DHA Phase 4','DHA Phase 5','DHA Phase 6','Gulberg I','Gulberg II','Gulberg III','Johar Town','Bahria Town','Model Town','Garden Town','Faisal Town','Iqbal Town','Wapda Town','Township','Defence Road','Cantt','Shadman'],
+  Karachi:    ['DHA Phase 1','DHA Phase 2','DHA Phase 5','DHA Phase 6','Clifton','Defence','Gulshan-e-Iqbal','Nazimabad','North Nazimabad','PECHS','Bahadurabad','Tariq Road','Saddar','FB Area','Korangi','Malir'],
+  Islamabad:  ['F-6','F-7','F-8','F-10','F-11','G-9','G-10','G-11','G-13','G-15','E-7','DHA Phase 1','DHA Phase 2','Bahria Town Phase 1','Bahria Town Phase 7','Sector H-13','PWD','CBR Town'],
+  Rawalpindi: ['Bahria Town','Saddar','Satellite Town','Chaklala Scheme','Gulraiz Housing','Askari 14','Raja Market','Commercial Market','DHA Rawalpindi','Airport Road'],
+  Faisalabad: ['Gulberg','Madina Town','Ghulam Muhammadabad','Peoples Colony','Jinnah Colony','Raza Abad'],
+  Multan:     ['Cantt','Wapda Town','Garden Town','Gulshan Abad','Shah Rukn-e-Alam Colony'],
+  Peshawar:   ['University Town','Hayatabad Phase 1','Hayatabad Phase 4','Hayatabad Phase 5','Dalazak Road'],
+  Quetta:     ['Samungli Road','Airport Road','Jinnah Town','Satellite Town'],
+};
+
+const ALL_CITIES = Object.keys(PAKISTAN_AREAS);
+
 const AgentDashboard = () => {
   const dispatch = useDispatch();
+  const location = useLocation();
+  const navigate = useNavigate();
+  const [searchParams] = useSearchParams();
 
-  // Tab: 'listings', 'form', 'bookings', 'messages'
+  // Tab: 'listings', 'form', 'bookings', 'messages', 'areaCoverage'
   const [activeTab, setActiveTab] = useState('listings');
   const { myProperties, loading: propertyLoading } = useSelector((state) => state.properties);
   const { bookings, loading: bookingLoading } = useSelector((state) => state.bookings);
   const { chats, messages, activeChatId, loading: chatLoading } = useSelector((state) => state.chat);
   const { user } = useSelector((state) => state.auth);
+
+  // Sync active tab and chat thread details from URL parameters
+  useEffect(() => {
+    if (location.pathname.includes('/messages')) {
+      setActiveTab('messages');
+      const chatId = searchParams.get('chatId');
+      if (chatId) {
+        dispatch(setActiveChat(chatId));
+        dispatch(fetchMessages(chatId));
+      }
+    } else if (location.pathname.includes('/bookings')) {
+      setActiveTab('bookings');
+    } else if (location.pathname.includes('/form')) {
+      setActiveTab('form');
+    } else if (location.pathname.includes('/areaCoverage')) {
+      setActiveTab('areaCoverage');
+    } else {
+      setActiveTab('listings');
+    }
+  }, [location.pathname, searchParams, dispatch]);
 
   // Form States
   const [editMode, setEditMode] = useState(false);
@@ -50,7 +89,14 @@ const AgentDashboard = () => {
   });
 
   const [images, setImages] = useState([]);
+  const [documents, setDocuments] = useState([]);
   const [typedMessage, setTypedMessage] = useState('');
+  const [privacyAccepted, setPrivacyAccepted] = useState(false);
+
+  // Area Coverage (agent's assigned service areas)
+  const [agentCoveredCity, setAgentCoveredCity] = useState('Lahore');
+  const [agentCoveredAreas, setAgentCoveredAreas] = useState([]);
+  const [newAreaInput, setNewAreaInput] = useState('');
 
   useEffect(() => {
     if (activeTab === 'listings') {
@@ -136,10 +182,16 @@ const AgentDashboard = () => {
       security: true,
     });
     setImages([]);
+    setDocuments([]);
+    setPrivacyAccepted(false);
   };
 
   const handleSubmitForm = async (e) => {
     e.preventDefault();
+    if (!privacyAccepted) {
+      alert('Please read and accept the Property Listing Privacy Policy before publishing.');
+      return;
+    }
     
     const formData = new FormData();
     formData.append('title', title);
@@ -163,6 +215,11 @@ const AgentDashboard = () => {
         formData.append('images', images[i]);
       }
     }
+    if (documents.length > 0) {
+      for (let i = 0; i < documents.length; i++) {
+        formData.append('documents', documents[i]);
+      }
+    }
 
     try {
       if (editMode) {
@@ -179,6 +236,20 @@ const AgentDashboard = () => {
     }
   };
 
+  // Area coverage management
+  const handleAddArea = () => {
+    const areaToAdd = newAreaInput.trim() || agentCoveredCity;
+    const key = `${agentCoveredCity} — ${areaToAdd}`;
+    if (!agentCoveredAreas.includes(key)) {
+      setAgentCoveredAreas(prev => [...prev, key]);
+    }
+    setNewAreaInput('');
+  };
+
+  const handleRemoveArea = (area) => {
+    setAgentCoveredAreas(prev => prev.filter(a => a !== area));
+  };
+
   const handleBookingAction = async (bookingId, action) => {
     try {
       await dispatch(updateBookingStatus({
@@ -192,8 +263,7 @@ const AgentDashboard = () => {
   };
 
   const handleSelectChat = (chatId) => {
-    dispatch(setActiveChat(chatId));
-    dispatch(fetchMessages(chatId));
+    navigate(`/agent/messages?chatId=${chatId}`);
   };
 
   const handleSendMessage = async (e) => {
@@ -236,7 +306,7 @@ const AgentDashboard = () => {
         {/* Sidebar Nav */}
         <div className="lg:col-span-1 rounded-2xl border bg-white p-3 dark:border-slate-800 dark:bg-slate-900 shadow-sm space-y-1">
           <button
-            onClick={() => setActiveTab('listings')}
+            onClick={() => navigate('/agent/listings')}
             className={`w-full flex items-center gap-2 rounded-xl px-4 py-2.5 text-xs font-semibold transition ${
               activeTab === 'listings' ? 'bg-primary-50 text-primary-600 dark:bg-primary-950/40 dark:text-primary-400' : 'text-slate-600 dark:text-slate-500 hover:bg-slate-50'
             }`}
@@ -246,7 +316,7 @@ const AgentDashboard = () => {
           </button>
 
           <button
-            onClick={() => { handleResetForm(); setActiveTab('form'); }}
+            onClick={() => { handleResetForm(); navigate('/agent/form'); }}
             className={`w-full flex items-center gap-2 rounded-xl px-4 py-2.5 text-xs font-semibold transition ${
               activeTab === 'form' ? 'bg-primary-50 text-primary-600 dark:bg-primary-950/40 dark:text-primary-400' : 'text-slate-600 dark:text-slate-500 hover:bg-slate-50'
             }`}
@@ -256,7 +326,7 @@ const AgentDashboard = () => {
           </button>
 
           <button
-            onClick={() => setActiveTab('bookings')}
+            onClick={() => navigate('/agent/bookings')}
             className={`w-full flex items-center gap-2 rounded-xl px-4 py-2.5 text-xs font-semibold transition ${
               activeTab === 'bookings' ? 'bg-primary-50 text-primary-600 dark:bg-primary-950/40 dark:text-primary-400' : 'text-slate-600 dark:text-slate-500 hover:bg-slate-50'
             }`}
@@ -266,13 +336,23 @@ const AgentDashboard = () => {
           </button>
 
           <button
-            onClick={() => setActiveTab('messages')}
+            onClick={() => navigate('/agent/messages')}
             className={`w-full flex items-center gap-2 rounded-xl px-4 py-2.5 text-xs font-semibold transition ${
               activeTab === 'messages' ? 'bg-primary-50 text-primary-600 dark:bg-primary-950/40 dark:text-primary-400' : 'text-slate-600 dark:text-slate-500 hover:bg-slate-50'
             }`}
           >
             <MessageSquare className="h-4.5 w-4.5" />
             <span>Customer Chats</span>
+          </button>
+
+          <button
+            onClick={() => navigate('/agent/areaCoverage')}
+            className={`w-full flex items-center gap-2 rounded-xl px-4 py-2.5 text-xs font-semibold transition ${
+              activeTab === 'areaCoverage' ? 'bg-primary-50 text-primary-600 dark:bg-primary-950/40 dark:text-primary-400' : 'text-slate-600 dark:text-slate-500 hover:bg-slate-50'
+            }`}
+          >
+            <MapPin className="h-4.5 w-4.5" />
+            <span>My Service Areas</span>
           </button>
         </div>
 
@@ -518,6 +598,7 @@ const AgentDashboard = () => {
                   </div>
                 </div>
 
+                {/* Upload Images */}
                 <div>
                   <label className="block text-[10px] font-bold text-slate-500 uppercase tracking-wider mb-1.5">Upload Images (multiple files allowed)</label>
                   <input
@@ -529,6 +610,65 @@ const AgentDashboard = () => {
                   />
                 </div>
 
+                {/* Upload Property Documents */}
+                <div>
+                  <label className="block text-[10px] font-bold text-slate-500 uppercase tracking-wider mb-1.5">Property Documents (title deed, NOC, fard, etc.)</label>
+                  <input
+                    type="file"
+                    multiple
+                    accept=".pdf,.doc,.docx,.jpg,.jpeg,.png"
+                    onChange={(e) => setDocuments(e.target.files)}
+                    className="w-full text-xs text-slate-500 file:mr-4 file:py-1.5 file:px-4 file:rounded-xl file:border-0 file:text-xs file:font-semibold file:bg-slate-100 file:text-slate-700 hover:file:bg-slate-200 file:transition dark:file:bg-slate-800 dark:file:text-slate-300"
+                  />
+                  <p className="text-[10px] text-slate-400 mt-1">Accepted: PDF, Word, or image files. These documents are securely stored and accessible only by you and the platform admin.</p>
+                </div>
+
+                {/* ── Privacy Policy Agreement ── */}
+                <div className="rounded-2xl border border-amber-200 bg-amber-50 dark:bg-amber-950/20 dark:border-amber-800 p-4 space-y-3">
+                  <div className="flex items-start gap-3">
+                    <ShieldCheck className="h-5 w-5 text-amber-600 dark:text-amber-400 shrink-0 mt-0.5" />
+                    <div>
+                      <h4 className="text-xs font-extrabold text-amber-800 dark:text-amber-300 uppercase tracking-wide">Property Listing Privacy Policy</h4>
+                      <div className="mt-2 text-[11px] text-amber-900 dark:text-amber-200 leading-relaxed space-y-1.5">
+                        <p>By listing this property on <strong>PropertyFinder</strong>, you agree to the following terms:</p>
+                        <ul className="list-disc pl-4 space-y-1">
+                          <li><strong>Document Accessibility:</strong> All property documents you upload (title deed, NOC, fard, utility bills, etc.) will be securely stored and accessible to <em>you (the listing agent)</em> and <em>the platform administrator</em> only. They will <u>not</u> be shared with buyers or renters without your consent.</li>
+                          <li><strong>Admin Verification:</strong> The platform admin reserves the right to review uploaded documents to verify the authenticity of your listing before it goes live.</li>
+                          <li><strong>Area Assignment:</strong> Your listing will be associated with the area you specify. Buyers/renters searching that area will be able to discover your listing.</li>
+                          <li><strong>Listing Accuracy:</strong> You confirm that all provided information (price, size, documents, location) is accurate and you are the authorized agent/owner for this property.</li>
+                          <li><strong>Data Retention:</strong> Documents are retained securely for the duration the listing remains active on the platform.</li>
+                        </ul>
+                      </div>
+                    </div>
+                  </div>
+
+                  <label className="flex items-start gap-3 cursor-pointer group mt-2">
+                    <input
+                      type="checkbox"
+                      checked={privacyAccepted}
+                      onChange={(e) => setPrivacyAccepted(e.target.checked)}
+                      className="mt-0.5 h-4 w-4 rounded border-amber-400 text-amber-600 focus:ring-amber-500"
+                    />
+                    <span className="text-[11px] font-semibold text-amber-800 dark:text-amber-300 group-hover:text-amber-900">
+                      I have read, understood, and agree to the Property Listing Privacy Policy. I confirm that all uploaded documents are genuine and I am the authorized agent/owner of this property.
+                    </span>
+                  </label>
+                </div>
+
+                {/* Agent's covered areas summary */}
+                {agentCoveredAreas.length > 0 && (
+                  <div className="rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 p-3">
+                    <p className="text-[10px] font-bold text-slate-500 uppercase tracking-wider mb-2">Your Registered Service Areas</p>
+                    <div className="flex flex-wrap gap-1.5">
+                      {agentCoveredAreas.map(a => (
+                        <span key={a} className="inline-flex items-center gap-1 rounded-full bg-primary-50 dark:bg-primary-950/40 text-primary-600 dark:text-primary-400 text-[10px] font-semibold px-2 py-0.5">
+                          <MapPin className="h-2.5 w-2.5" />{a}
+                        </span>
+                      ))}
+                    </div>
+                  </div>
+                )}
+
                 <div className="flex gap-2 justify-end pt-4 border-t dark:border-slate-800">
                   <button
                     type="button"
@@ -539,7 +679,10 @@ const AgentDashboard = () => {
                   </button>
                   <button
                     type="submit"
-                    className="flex items-center gap-2 rounded-xl bg-primary-600 px-6 py-2 text-xs font-semibold text-white shadow hover:bg-primary-700 transition"
+                    disabled={!privacyAccepted}
+                    className={`flex items-center gap-2 rounded-xl px-6 py-2 text-xs font-semibold text-white shadow transition ${
+                      privacyAccepted ? 'bg-primary-600 hover:bg-primary-700' : 'bg-slate-300 dark:bg-slate-700 cursor-not-allowed'
+                    }`}
                   >
                     <Save className="h-4.5 w-4.5" />
                     <span>{editMode ? 'Update Properties' : 'Publish Property'}</span>
@@ -619,7 +762,7 @@ const AgentDashboard = () => {
                     <p className="text-[10px] text-slate-500 p-4 text-center">No active chats.</p>
                   ) : (
                     chats.map((chat) => {
-                      const counterpart = chat.participants.find(p => p._id !== user?.id);
+                      const counterpart = chat.participants?.find(p => p._id !== user?.id);
                       return (
                         <button
                           key={chat._id}
@@ -694,6 +837,118 @@ const AgentDashboard = () => {
             </div>
           )}
 
+          {/* ── My Service Areas (Area Division) ── */}
+          {activeTab === 'areaCoverage' && (
+            <div className="space-y-6">
+              <div>
+                <h2 className="text-lg font-bold dark:text-white font-sans">My Service Areas</h2>
+                <p className="text-xs text-slate-500 mt-1">Define the cities and areas where you operate as an agent. Buyers searching those areas will see your listings prominently.</p>
+              </div>
+
+              {/* Add Area Form */}
+              <div className="rounded-2xl border border-slate-100 dark:border-slate-800 bg-white dark:bg-slate-900 shadow-sm p-5 space-y-4">
+                <h3 className="text-xs font-extrabold text-slate-700 dark:text-slate-200 uppercase tracking-wider">Register a New Area</h3>
+
+                <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+                  {/* City */}
+                  <div>
+                    <label className="block text-[10px] font-bold text-slate-500 uppercase tracking-wider mb-1.5">City</label>
+                    <select
+                      value={agentCoveredCity}
+                      onChange={(e) => { setAgentCoveredCity(e.target.value); setNewAreaInput(''); }}
+                      className="w-full rounded-xl border border-slate-200 bg-slate-50 px-3 py-2 text-xs focus:outline-none dark:border-slate-700 dark:bg-slate-800"
+                    >
+                      {ALL_CITIES.map(c => <option key={c} value={c}>{c}</option>)}
+                    </select>
+                  </div>
+
+                  {/* Known sub-area quick pick */}
+                  <div>
+                    <label className="block text-[10px] font-bold text-slate-500 uppercase tracking-wider mb-1.5">Area / Society (select)</label>
+                    <select
+                      value={newAreaInput}
+                      onChange={(e) => setNewAreaInput(e.target.value)}
+                      className="w-full rounded-xl border border-slate-200 bg-slate-50 px-3 py-2 text-xs focus:outline-none dark:border-slate-700 dark:bg-slate-800"
+                    >
+                      <option value="">— pick from list —</option>
+                      {(PAKISTAN_AREAS[agentCoveredCity] || []).map(a => (
+                        <option key={a} value={a}>{a}</option>
+                      ))}
+                    </select>
+                  </div>
+
+                  {/* Custom area name */}
+                  <div>
+                    <label className="block text-[10px] font-bold text-slate-500 uppercase tracking-wider mb-1.5">Or Type Custom Area</label>
+                    <input
+                      type="text"
+                      placeholder="e.g. Phase 8, Block D"
+                      value={newAreaInput}
+                      onChange={(e) => setNewAreaInput(e.target.value)}
+                      className="w-full rounded-xl border border-slate-200 bg-slate-50 px-3 py-2 text-xs focus:outline-none dark:border-slate-700 dark:bg-slate-800"
+                    />
+                  </div>
+                </div>
+
+                <button
+                  onClick={handleAddArea}
+                  className="flex items-center gap-2 rounded-xl bg-primary-600 px-5 py-2 text-xs font-bold text-white hover:bg-primary-700 active:scale-95 transition"
+                >
+                  <PlusCircle className="h-4 w-4" />
+                  Add Area to My Coverage
+                </button>
+              </div>
+
+              {/* Covered areas list */}
+              <div className="rounded-2xl border border-slate-100 dark:border-slate-800 bg-white dark:bg-slate-900 shadow-sm p-5">
+                <h3 className="text-xs font-extrabold text-slate-700 dark:text-slate-200 uppercase tracking-wider mb-4">
+                  Registered Coverage Areas ({agentCoveredAreas.length})
+                </h3>
+                {agentCoveredAreas.length === 0 ? (
+                  <div className="py-10 text-center">
+                    <MapPin className="h-10 w-10 text-slate-200 dark:text-slate-700 mx-auto mb-2" />
+                    <p className="text-xs text-slate-500">No areas registered yet. Add your first service area above.</p>
+                  </div>
+                ) : (
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                    {agentCoveredAreas.map((a) => {
+                      const [aCity, aArea] = a.split(' — ');
+                      return (
+                        <div key={a} className="flex items-center justify-between rounded-xl border border-slate-100 dark:border-slate-800 bg-slate-50 dark:bg-slate-800 px-3 py-2">
+                          <div className="flex items-center gap-2 min-w-0">
+                            <MapPin className="h-3.5 w-3.5 text-primary-500 shrink-0" />
+                            <div className="min-w-0">
+                              <p className="text-[10px] font-bold text-slate-700 dark:text-slate-200 truncate">{aArea || a}</p>
+                              <p className="text-[9px] text-slate-500">{aCity}</p>
+                            </div>
+                          </div>
+                          <button
+                            onClick={() => handleRemoveArea(a)}
+                            className="ml-2 text-red-400 hover:text-red-600 transition"
+                            title="Remove area"
+                          >
+                            <XCircle className="h-4 w-4" />
+                          </button>
+                        </div>
+                      );
+                    })}
+                  </div>
+                )}
+              </div>
+
+              {/* Info about area division */}
+              <div className="rounded-2xl border border-sky-100 dark:border-sky-900 bg-sky-50 dark:bg-sky-950/20 p-4 flex gap-3">
+                <Info className="h-5 w-5 text-sky-500 shrink-0 mt-0.5" />
+                <div className="text-[11px] text-sky-800 dark:text-sky-300 leading-relaxed space-y-1">
+                  <p className="font-extrabold uppercase tracking-wide text-sky-700 dark:text-sky-400 text-[10px]">How Area Division Works</p>
+                  <p>Each registered area represents a <strong>geographic territory</strong> where you are authorized to list and manage properties. The platform admin may assign or approve additional exclusive areas.</p>
+                  <p>When a buyer or renter searches properties in one of your covered areas, your listings will appear prominently. Areas are also used in admin reporting to divide agent performance metrics by territory.</p>
+                  <p className="text-sky-600 dark:text-sky-400 font-semibold">Your covered areas and their associated listings are visible to the platform administrator for verification and audit purposes.</p>
+                </div>
+              </div>
+            </div>
+          )}
+
         </div>
       </div>
     </div>
@@ -701,3 +956,4 @@ const AgentDashboard = () => {
 };
 
 export default AgentDashboard;
+
