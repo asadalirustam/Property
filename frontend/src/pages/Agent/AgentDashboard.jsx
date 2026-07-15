@@ -10,6 +10,35 @@ import {
 } from 'lucide-react';
 import api from '../../utils/api';
 
+import { MapContainer, TileLayer, Marker, useMap, useMapEvents } from 'react-leaflet';
+import 'leaflet/dist/leaflet.css';
+import L from 'leaflet';
+import markerIcon from 'leaflet/dist/images/marker-icon.png';
+import markerShadow from 'leaflet/dist/images/marker-shadow.png';
+
+// Helper component to re-center the map when coords change
+const MapRecenter = ({ lat, lng }) => {
+  const map = useMap();
+  useEffect(() => {
+    const latitude = parseFloat(lat);
+    const longitude = parseFloat(lng);
+    if (!isNaN(latitude) && !isNaN(longitude)) {
+      map.setView([latitude, longitude], map.getZoom());
+    }
+  }, [lat, lng, map]);
+  return null;
+};
+
+// Helper component to capture map click events
+const MapEventsHandler = ({ onMapClick }) => {
+  useMapEvents({
+    click(e) {
+      onMapClick(e.latlng);
+    },
+  });
+  return null;
+};
+
 // Pakistan cities/areas for agent area division
 const PAKISTAN_AREAS = {
   Lahore:     ['DHA Phase 1','DHA Phase 2','DHA Phase 3','DHA Phase 4','DHA Phase 5','DHA Phase 6','Gulberg I','Gulberg II','Gulberg III','Johar Town','Bahria Town','Model Town','Garden Town','Faisal Town','Iqbal Town','Wapda Town','Township','Defence Road','Cantt','Shadman'],
@@ -92,6 +121,40 @@ const AgentDashboard = () => {
   const [documents, setDocuments] = useState([]);
   const [typedMessage, setTypedMessage] = useState('');
   const [privacyAccepted, setPrivacyAccepted] = useState(false);
+
+  // Live Location / Geolocation states
+  const [detectingLoc, setDetectingLoc] = useState(false);
+
+  // Geolocation trigger
+  const handleDetectLocation = () => {
+    if (!navigator.geolocation) {
+      return alert('Geolocation is not supported by your browser');
+    }
+    setDetectingLoc(true);
+    navigator.geolocation.getCurrentPosition(
+      (position) => {
+        setLat(position.coords.latitude.toFixed(6));
+        setLng(position.coords.longitude.toFixed(6));
+        setDetectingLoc(false);
+      },
+      (error) => {
+        setDetectingLoc(false);
+        alert('Failed to detect location: ' + error.message);
+      }
+    );
+  };
+
+  // Fix Leaflet default marker icons for Vite
+  useEffect(() => {
+    delete L.Icon.Default.prototype._getIconUrl;
+    L.Icon.Default.mergeOptions({
+      iconUrl: markerIcon,
+      shadowUrl: markerShadow,
+      iconSize: [25, 41],
+      iconAnchor: [12, 41],
+      popupAnchor: [1, -34],
+    });
+  }, []);
 
   // Area Coverage (agent's assigned service areas)
   const [agentCoveredCity, setAgentCoveredCity] = useState('Lahore');
@@ -535,6 +598,38 @@ const AgentDashboard = () => {
                       />
                     </div>
                   </div>
+                </div>
+
+                {/* Interactive map display and detect location action */}
+                <div className="space-y-2">
+                  <div className="flex justify-between items-center">
+                    <label className="block text-[10px] font-bold text-slate-500 uppercase tracking-wider">Select Location on Map</label>
+                    <button
+                      type="button"
+                      onClick={handleDetectLocation}
+                      disabled={detectingLoc}
+                      className="inline-flex items-center gap-1 text-[10px] font-bold text-primary-600 dark:text-primary-400 hover:underline disabled:opacity-50"
+                    >
+                      <MapPin className="h-3.5 w-3.5" />
+                      <span>{detectingLoc ? 'Detecting...' : 'Detect Live Location'}</span>
+                    </button>
+                  </div>
+                  
+                  <div className="h-60 rounded-xl overflow-hidden border dark:border-slate-800 z-10 relative">
+                    <MapContainer center={[parseFloat(lat) || 31.5204, parseFloat(lng) || 74.3587]} zoom={13} className="h-full w-full">
+                      <TileLayer
+                        attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+                        url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+                      />
+                      <Marker position={[parseFloat(lat) || 31.5204, parseFloat(lng) || 74.3587]} />
+                      <MapRecenter lat={lat} lng={lng} />
+                      <MapEventsHandler onMapClick={(latlng) => {
+                        setLat(latlng.lat.toFixed(6));
+                        setLng(latlng.lng.toFixed(6));
+                      }} />
+                    </MapContainer>
+                  </div>
+                  <p className="text-[10px] text-slate-400">Click anywhere on the map or click 'Detect Live Location' to place a marker at the property's coordinates.</p>
                 </div>
 
                 <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
